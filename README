@@ -1,0 +1,8 @@
+# CoronaVirus Web System
+
+### How to configure mongodb password on this system?
+```
+ mkdir secret
+ touch secret/password.json
+```
+"mongoose_connection": "..."
