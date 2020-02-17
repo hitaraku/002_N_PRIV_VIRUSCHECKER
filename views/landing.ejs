@@ -17,7 +17,22 @@
         return self.indexOf(x) === i;
     });
     %>
-    <%= repeatDeleteArray %>
+    <% 
+    // var repeatDeleteArray_4_show = [];
+    // coronavirustimelines.forEach(function(coronavirustimeline, i){
+    //     if(repeatDeleteArray_4_show.
+    //     repeatDeleteArray_4_show.push({
+    //         countryName: coronavirustimeline.countryName,
+    //         provinceName: coronavirustimeline.provinceName,
+    //         currentConfirmedCount: coronavirustimeline.currentConfirmedCount,
+    //         curedCount: coronavirustimeline.curedCount,
+    //         deadCount: coronavirustimeline.deadCount
+    //     });
+    // });
+    %>
+    
+    <%= gotDate %>
+
 
     
     <div class="row" style="display:flex; flex-wrap: wrap;">
@@ -46,9 +61,8 @@
         <% }) %>
     </tr>
     <% coronavirustimelines.forEach(function(coronavirustimeline, i){ %>
-        <%= coronavirustimeline.countryName %>,
+        <%= //coronavirustimeline.countryName %>,
     <% }) %>
-        <%= gotDate %>
     </div>
 </div>
 
