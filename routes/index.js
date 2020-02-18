@@ -1,16 +1,28 @@
 var express     = require("express"),
-    router      = express.Router();
+    router      = express.Router(),
+    Coronavirustimeline = require("../models/coronavirustimeline");
     // passport    = require("passport"),
     // assistant   = require("../middleware/watson_assistant"),
     // User        = require("../models/user");
     
-const mCovUrl = 'https://lab.isaaclin.cn/nCoV';
-
-
-    
-// Index Route
+// // Index Route
+// router.get("/", function(req, res){
+//     res.render("landing");
+// });
+/*************************
+* Configure for Route
+**************************/
 router.get("/", function(req, res){
-    res.render("landing");
+    // For show all opportunitys
+    Coronavirustimeline.findOne({}).sort({ gotDate: 'desc'}).exec(function(err, latestCoronavirustimeline){
+        if(err) {
+            console.log(err);
+        } else {
+            res.render("landing", {coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, gotDate: latestCoronavirustimeline.gotDate});
+        }
+   });
 });
+
+
 
 module.exports = router;

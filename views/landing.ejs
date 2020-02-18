@@ -1,21 +1,70 @@
 <% include partials/header %>
 
-<section class="jumbotron text-center">
-    <div class="container">
-        <div class="row">
-            <h1 class="jumbotron-heading">ウェルカム!</h1>
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>コロナウイルスチェッカー</h1>
+            <p>現在のコロナウイルス感染者の統計を表示します。</p>
         </div>
+    </header>
+    <%
+    var arrayCorona = [];
+    coronavirustimelines.forEach(function(coronavirustimeline, i){
+        arrayCorona.push(coronavirustimeline.countryName);
+    });
+    // 重複を削除したリスト
+    var repeatDeleteArray = arrayCorona.filter(function (x, i, self) {
+        return self.indexOf(x) === i;
+    });
+    %>
+    <% 
+    // var repeatDeleteArray_4_show = [];
+    // coronavirustimelines.forEach(function(coronavirustimeline, i){
+    //     if(repeatDeleteArray_4_show.
+    //     repeatDeleteArray_4_show.push({
+    //         countryName: coronavirustimeline.countryName,
+    //         provinceName: coronavirustimeline.provinceName,
+    //         currentConfirmedCount: coronavirustimeline.currentConfirmedCount,
+    //         curedCount: coronavirustimeline.curedCount,
+    //         deadCount: coronavirustimeline.deadCount
+    //     });
+    // });
+    %>
     
-        <div class="row">
-            <p>ようこそ！ Ageage Town サイトへ!!</p>
-        </div>
+    <%= gotDate %>
+
+
     
-        <% // if(currentUser) { %>
-            <!--<div class="row">-->
-            <!--    <a href="/shopowners">全てのショップオーナーカードをみる。</a>-->
-            <!--</div>-->
-        <% // } %>
+    <div class="row" style="display:flex; flex-wrap: wrap;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">国名</th>
+              <th scope="col">州名</th>
+              <th scope="col">かかった人</th>
+              <th scope="col">治癒者</th>
+              <th scope="col">死者</th>
+            </tr>
+          </thead>
+        <% coronavirustimelines.forEach(function(coronavirustimeline, i){ %>
+        　<tbody>
+            <tr>
+            <th scope="row"><%= i+1 %></th>
+            <td><%= coronavirustimeline.countryName %></td>
+            <td><%= coronavirustimeline.provinceName %></td>
+            <td><%= coronavirustimeline.currentConfirmedCount %></td>
+            <td><%= coronavirustimeline.curedCount %></td>
+            <td><%= coronavirustimeline.deadCount %></td>
+            </tr>
+        </tbody>
+        <% }) %>
+    </tr>
+    <% coronavirustimelines.forEach(function(coronavirustimeline, i){ %>
+        <%= //coronavirustimeline.countryName %>,
+    <% }) %>
     </div>
-</section>
+</div>
+
 
 <% include partials/footer %>

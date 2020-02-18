@@ -1,4 +1,7 @@
-var express       = require("express"), 
+/**************************
+* Configure For Express and the others.
+**************************/
+const express       = require("express"), 
     app           = express(), 
     bodyParser    = require("body-parser"), 
     mongoose      = require("mongoose"),
@@ -12,16 +15,62 @@ var express       = require("express"),
     // Category2      = require("./models/category2"),
     // Opportunity      = require("./models/opportunity"),
     // Assistant      = require("./middleware/watson_assistant"),
-    fs             = require("fs");
+    Coronavirustimeline     = require("./models/coronavirustimeline"),
+    // Coronavirusrumors       = require("./models/coronavirusrumors"),
+    dateFormat  = require('dateformat'),
+    https            = require("https"),
+    fs             = require("fs"),
+    cron = require('node-cron');
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
+
+/**************************
+* Get coronavirus data from DXY-2019-nCoV-Crawler
+**************************/
+const url           = 'https://lab.isaaclin.cn/nCoV/',
+      areaUrl   = url + 'api/area';
+
+// schedule get coronavirus from web to store mongodb
+cron.schedule('0 0 */1 * * *', () => {
+    https.get(areaUrl, function(res){
+        var body = '';
+        var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
     
+        res.on('data', function(chunk){
+            body += chunk;
+        });
+    
+        res.on('end', function(){
+            try {
+                var fbResponse = JSON.parse(body);
+                var newCoronavirustimeline = {
+                    cornavirusoverall: fbResponse,
+                    gotDate: dateTime,
+                }
+                // create a new shopuser and save to DB.
+                Coronavirustimeline.create(newCoronavirustimeline, function(err, newlyCreated){
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("success store cornavirus to database");
+                    }
+                });
+                console.log("Got a response: ", fbResponse.picture);
+            } catch (e) {
+                console.log("Error Got a HTML : ", e);
+            }
+        });
+    }).on('error', function(e){
+          console.log("Got an error: ", e);
+    });
+});
+
 /**************************
 * UploadFile 'express-fileupload'
 **************************/
 // default options
 // app.use(fileUpload());
-    
+
 /**************************
 * Require For Route
 **************************/
