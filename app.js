@@ -23,6 +23,30 @@ const express       = require("express"),
     cron = require('node-cron');
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
+    
+/**************************
+* Mongoose Connection
+**************************/
+// Get content from file
+var connecturl;
+if(process.env.MONGO_SECRET) {
+    connecturl = process.env.MONGO_SECRET;
+} else {
+    var contents = fs.readFileSync("./secret/password.json");
+    var jsonContent = JSON.parse(contents);
+    connecturl = jsonContent.mongoose_connection;
+}
+console.log("connecturl: " + connecturl);
+
+// connect use connectUrl
+mongoose.connect(connecturl, function(err, db){
+    if(err) {
+        console.log('Unable to connect to the server. Please start the server. Error:', err);
+        process.exit(1);
+    } else {
+        console.log('Connected to Server successfully!');
+    }
+});
 
 /**************************
 * Get coronavirus data from DXY-2019-nCoV-Crawler
@@ -80,17 +104,6 @@ cron.schedule('0 0 */1 * * *', () => {
 //     indexRoutes         = require("./routes/index");
     
 var indexRoutes         = require("./routes/index");
-
-
-/**************************
-* Mongoose Connection
-**************************/
-// Get content from file
-var contents = fs.readFileSync("./secret/password.json");
-// Define to JSON type
-var jsonContent = JSON.parse(contents);
-var connecturl = jsonContent.mongoose_connection;
-mongoose.connect(connecturl);
 
 /**************************
 * Configure for API, css, ejs...
