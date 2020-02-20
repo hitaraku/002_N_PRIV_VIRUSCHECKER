@@ -17,8 +17,21 @@
         return self.indexOf(x) === i;
     });
     %>
+    <%= repeatDeleteArray %>
     <% 
-    // var repeatDeleteArray_4_show = [];
+    var repeatDeleteArray_4_currentConfirmedCount = [];
+    var repeatDeleteArray_4_curedCount = [];
+    var repeatDeleteArray_4_deadCount = [];
+    // coronavirustimelines.forEach(function(coronavirustimeline, i){
+    //     if(repeatDeleteArray_4_show.
+    //     repeatDeleteArray_4_show.push({
+    //         countryName: coronavirustimeline.countryName,
+    //         provinceName: coronavirustimeline.provinceName,
+    //         currentConfirmedCount: coronavirustimeline.currentConfirmedCount,
+    //         curedCount: coronavirustimeline.curedCount,
+    //         deadCount: coronavirustimeline.deadCount
+    //     });
+    // });
     // coronavirustimelines.forEach(function(coronavirustimeline, i){
     //     if(repeatDeleteArray_4_show.
     //     repeatDeleteArray_4_show.push({
@@ -36,7 +49,7 @@
 
     
     <div class="row" style="display:flex; flex-wrap: wrap;">
-        <table class="table">
+        <table class="table table-striped  table-dark">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -47,19 +60,18 @@
               <th scope="col">死者</th>
             </tr>
           </thead>
-        <% coronavirustimelines.forEach(function(coronavirustimeline, i){ %>
         　<tbody>
-            <tr>
-            <th scope="row"><%= i+1 %></th>
-            <td><%= coronavirustimeline.countryName %></td>
-            <td><%= coronavirustimeline.provinceName %></td>
-            <td><%= coronavirustimeline.currentConfirmedCount %></td>
-            <td><%= coronavirustimeline.curedCount %></td>
-            <td><%= coronavirustimeline.deadCount %></td>
-            </tr>
-        </tbody>
-        <% }) %>
-    </tr>
+            <% coronavirustimelines.forEach(function(coronavirustimeline, i){ %>
+                <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= coronavirustimeline.countryName %></td>
+                <td><%= coronavirustimeline.provinceName %></td>
+                <td><%= coronavirustimeline.currentConfirmedCount %></td>
+                <td><%= coronavirustimeline.curedCount %></td>
+                <td><%= coronavirustimeline.deadCount %></td>
+                </tr>
+            <% }) %>
+          </tbody>
     <% coronavirustimelines.forEach(function(coronavirustimeline, i){ %>
         <%= //coronavirustimeline.countryName %>,
     <% }) %>
