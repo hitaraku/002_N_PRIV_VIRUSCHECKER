@@ -22,26 +22,62 @@
     var repeatDeleteArray_4_currentConfirmedCount = [];
     var repeatDeleteArray_4_curedCount = [];
     var repeatDeleteArray_4_deadCount = [];
-    // coronavirustimelines.forEach(function(coronavirustimeline, i){
-    //     if(repeatDeleteArray_4_show.
-    //     repeatDeleteArray_4_show.push({
-    //         countryName: coronavirustimeline.countryName,
-    //         provinceName: coronavirustimeline.provinceName,
-    //         currentConfirmedCount: coronavirustimeline.currentConfirmedCount,
-    //         curedCount: coronavirustimeline.curedCount,
-    //         deadCount: coronavirustimeline.deadCount
-    //     });
-    // });
-    // coronavirustimelines.forEach(function(coronavirustimeline, i){
-    //     if(repeatDeleteArray_4_show.
-    //     repeatDeleteArray_4_show.push({
-    //         countryName: coronavirustimeline.countryName,
-    //         provinceName: coronavirustimeline.provinceName,
-    //         currentConfirmedCount: coronavirustimeline.currentConfirmedCount,
-    //         curedCount: coronavirustimeline.curedCount,
-    //         deadCount: coronavirustimeline.deadCount
-    //     });
-    // });
+    coronavirustimelines.forEach(function(coronavirustimeline, i){
+        repeatDeleteArray_4_currentConfirmedCount.push({
+            countryName: coronavirustimeline.countryName,
+            provinceName: coronavirustimeline.provinceName,
+            currentConfirmedCount: coronavirustimeline.currentConfirmedCount
+        });
+        repeatDeleteArray_4_curedCount.push({
+            countryName: coronavirustimeline.countryName,
+            provinceName: coronavirustimeline.provinceName,
+            curedCount: coronavirustimeline.curedCount
+        });
+        repeatDeleteArray_4_deadCount.push({
+            countryName: coronavirustimeline.countryName,
+            provinceName: coronavirustimeline.provinceName,
+            deadCount: coronavirustimeline.deadCount
+        });
+    });
+    
+    var removeDuplicated_currentConfirmedCountArray = [];
+    var removeDuplicated_curedCountArray = [];
+    var removeDuplicated_deadCountArray = [];
+    
+    // sort and consolidate element
+    for(let i = 0; i < repeatDeleteArray.length; i++) {
+        /* For currentConfirmed */
+        var mfilter_currentConfirmedCountArray = repeatDeleteArray_4_currentConfirmedCount.filter(element => element.countryName == repeatDeleteArray[i]);
+        // console.log("repeatDeleteArray[i].countryName: " + repeatDeleteArray[i].countryName);
+        // console.log(mfilter_currentConfirmedCountArray);
+        for(let j = 0; j < mfilter_currentConfirmedCountArray.length; j++) {
+            removeDuplicated_currentConfirmedCountArray.push({
+                countryName: mfilter_currentConfirmedCountArray[j].countryName,
+                provinceName: mfilter_currentConfirmedCountArray[j].provinceName,
+                currentConfirmedCount: mfilter_currentConfirmedCountArray[j].currentConfirmedCount
+            });
+        }
+        
+        /* For curedCount */
+        var mfilter_curedCountArray = repeatDeleteArray_4_curedCount.filter(element => element.countryName == repeatDeleteArray[i]);
+        for(let j = 0; j < mfilter_curedCountArray.length; j++) {
+            removeDuplicated_curedCountArray.push({
+                countryName: mfilter_curedCountArray[j].countryName,
+                provinceName: mfilter_curedCountArray[j].provinceName,
+                currentConfirmedCount: mfilter_curedCountArray[j].currentConfirmedCount
+            });
+        }
+                
+        /* For deadCount */
+        var mfilter_deadCountArray = repeatDeleteArray_4_deadCount.filter(element => element.countryName == repeatDeleteArray[i]);
+        for(let j = 0; j < mfilter_deadCountArray.length; j++) {
+            removeDuplicated_deadCountArray.push({
+                countryName: mfilter_deadCountArray[j].countryName,
+                provinceName: mfilter_deadCountArray[j].provinceName,
+                currentConfirmedCount: mfilter_deadCountArray[j].currentConfirmedCount
+            });
+        }
+    }
     %>
     
     <%= gotDate %>
