@@ -1,12 +1,63 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Coronaviurs Heat Graph</title>
+    <!-- 
+    こんにちは！ようこそソースコードへ。私は開発者のディレクターNと申します。
+    今回なぜこれを開発しようと考えたかと言いますと、
+    コロナウイルスの現状を知ってもらい、
+    コロナウイルス対策に対してこのサイトが一助となれば良いと思い、
+    開発に至りました。
+    １日でも早く終息することを願います。
+    -->
+    <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1,shrink-to-fit=no">
+
+        <!-- All in One SEO Pack 2.7.3 by Michael Torbert of Semper Fi Web Design[973,988] -->
+        <meta name="description" itemprop="description" content="コロナウイルスを簡易的に確認する為のツールを作成しました。コロナウイルスの現状を把握し、対策をする為のツールとして少しでもお役に立てれば幸いです。">
+        <meta name="keywords" content="コロナウイルス,日本語,コロナ,ウイルス,感染,感染者数,感染者,コロナ　ウイルス,予防,ヒートマップ,Corona,CoronaVirus">
+        <!--<link rel="next" href="https://evelinks.org/page/2/">-->
+        <!--<link rel="canonical" href="https://evelinks.org/">-->
+
+        <!-- ここからOGP -->
+        <!-- meta data & ogp -->
+        <meta property="og:title" content="コロナウイルス簡易チェッカー">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://viruschecker.tokyo/">
+        <meta property="og:image" content="/resources/images/virus.png">
+        <meta property="og:site_name" content="コロナウイルス簡易チェッカー">
+        <meta property="og:description" content="コロナウイルス,日本語,コロナ,ウイルス,感染,感染者数,感染者,コロナ　ウイルス,予防,ヒートマップ,Corona,CoronaVirus">
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="コロナウイルス簡易チェッカー">
+        <meta name="twitter:description" content="コロナウイルス,日本語,コロナ,ウイルス,感染,感染者数,感染者,コロナ　ウイルス,予防,ヒートマップ,Corona,CoronaVirus">
+        <meta name="twitter:image" content="/resources/images/virus.png">
+        <!-- ここまでOGP --> 
+        
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-81848911-26"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+        
+          gtag('config', 'UA-81848911-26');
+        </script>
+
+        <!-- For Google Search Console -->
+        <meta name="google-site-verification" content="UhweN6zlyeCc1sFtlhJD2AWgK3ZdQ0BDEIOa1MwnkSA" />
+        
+        <link rel="icon" href="/resources/images/virusicon.png">
+        
+        <title>コロナウイルス簡易チェッカー</title>
+        
+        <link rel="dns-prefetch" href="//v0.wordpress.com">
+        <link rel="dns-prefetch" href="//i0.wp.com">
+        <link rel="dns-prefetch" href="//i1.wp.com">
+        <link rel="dns-prefetch" href="//i2.wp.com">
+
         <!-- Latest compiled and minified CSS -->
-        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">-->
         <meta content="width=device-width,initial-scale=1,shrink-to-fit=no" name="viewport">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/darkly/bootstrap.min.css">
-        <!--<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">-->
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
@@ -14,8 +65,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Coronaviurs Heat Checker</a>
+                <a class="navbar-brand" href="/">コロナウイルス簡易チェッカー</a>
             </div>
         </div>
     </nav>
-
