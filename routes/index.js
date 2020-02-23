@@ -18,6 +18,7 @@ router.get("/", function(req, res){
         if(err) {
             console.log(err);
         } else {
+            console.log( latestCoronavirustimeline.cornavirusoverall.results);
             res.render("landing", {coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, gotDate: latestCoronavirustimeline.gotDate});
         }
    });
