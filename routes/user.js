@@ -7,7 +7,7 @@ var express     = require("express"),
 /**************************
 * Configure for Route
 **************************/
-router.get("/", function(req, res){
+router.get("/", require('connect-ensure-login').ensureLoggedIn(), function(req, res){
     // For show all cards
     User.find({}, function(err, allUsers){
         if(err) {
