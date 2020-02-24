@@ -64,4 +64,9 @@ router.get('/profile', require('connect-ensure-login').ensureLoggedIn(), functio
   res.render('profile', { user: req.user });
 });
 
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
 module.exports = router;
