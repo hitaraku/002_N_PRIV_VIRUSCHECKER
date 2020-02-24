@@ -61,11 +61,43 @@
         <link rel="stylesheet" href="/stylesheets/main.css">
     </head>
     <body>
+        <script>
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '203104277741968',
+              cookie     : true,
+              xfbml      : true,
+              version    : 'v6.0'
+            });
+              
+            FB.AppEvents.logPageView();   
+            FB.getLoginStatus(function(response) {
+                console.log(response);
+            });
+          };
+        
+          (function(d, s, id){
+             var js, fjs = d.getElementsByTagName(s)[0];
+             if (d.getElementById(id)) {return;}
+             js = d.createElement(s); js.id = id;
+             js.src = "https://connect.facebook.net/en_US/sdk.js";
+             fjs.parentNode.insertBefore(js, fjs);
+           }(document, 'script', 'facebook-jssdk'));
+           
+        </script>        
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">コロナウイルス簡易チェッカー</a>
+                
+<fb:login-button 
+  scope="public_profile,email"
+  onlogin="checkLoginState();">
+    <div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v6.0&appId=774531906273658&autoLogAppEvents=1"></script>
+</fb:login-button>
+
             </div>
         </div>
     </nav>

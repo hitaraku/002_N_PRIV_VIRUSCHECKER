@@ -20,7 +20,9 @@ const express       = require("express"),
     dateFormat  = require('dateformat'),
     https            = require("https"),
     fs             = require("fs"),
-    cron = require('node-cron');
+    cron = require('node-cron'),
+    passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy;
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
     
@@ -36,7 +38,6 @@ if(process.env.MONGO_SECRET) {
     var jsonContent = JSON.parse(contents);
     connecturl = jsonContent.mongoose_connection;
 }
-console.log("connecturl: " + connecturl);
 
 // connect use connectUrl
 mongoose.connect(connecturl, function(err, db){
@@ -90,6 +91,43 @@ cron.schedule('0 0 */1 * * *', () => {
 });
 
 /**************************
+* Configure Facebook Passport 
+**************************/
+const fbAppId = process.env.FACEBOOK_APP_ID;
+const fbAppSecret = process.env.FACEBOOK_APP_SECRET;
+passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: '/'
+  },
+  function(accessToken, refreshToken, profile, cb) {
+    // In this example, the user's Facebook profile is supplied as the user
+    // record.  In a production-quality application, the Facebook profile should
+    // be associated with a user record in the application's database, which
+    // allows for account linking and authentication with other identity
+    // providers.
+    return cb(null, profile);
+  }
+));
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Facebook profile is serialized
+// and deserialized.
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+/**************************
 * UploadFile 'express-fileupload'
 **************************/
 // default options
@@ -115,11 +153,23 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 /**************************
+* Initialize Passport and restore authentication state, if any, 
+* from the session
+**************************/
+app.use(passport.initialize());
+app.use(passport.session());
+
+/**************************
 * Configure For Routes
 **************************/
 app.use("/", indexRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
+
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+  res.send('what???', 404);
+});
 
 /**************************
 * Configure For Listen (HTTP)
@@ -127,7 +177,6 @@ app.use("/", indexRoutes);
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Coronaviurs start!!");
 });
-
 
 /**************************
 * Get Data From CoronaVirus
