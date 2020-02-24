@@ -101,12 +101,16 @@ passport.use(
     {
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: '/return'
+        callbackURL: '/return',
+        profileFields: ['id', 'email', 'displayName']
     },
     (accessToken, refreshToken, profile, done) => {
       if (!profile) {
         return done(null, false);
       }
+      
+      // TODO DELETE
+      console.log(profile);
 
       User.findOne({ facebookId: profile.id })
         .then(existingUser => {
@@ -116,7 +120,7 @@ passport.use(
             new User({
               displayName: profile.displayName,
               facebookId: profile.id,
-              emails: profile.emails
+              email: profile.email
             })
               .save()
               .then(user => done(null, user));
