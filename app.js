@@ -166,6 +166,27 @@ app.use("/", indexRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
 
+// Define routes.
+app.get('/login',
+  function(req, res){
+    res.render('login');
+  });
+
+app.get('/login/facebook',
+  passport.authenticate('facebook'));
+
+app.get('/return', 
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    res.redirect('/');
+  });
+
+app.get('/profile',
+  require('connect-ensure-login').ensureLoggedIn(),
+  function(req, res){
+    res.render('profile', { user: req.user });
+  });
+  
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', function(req, res){
   res.send('what???', 404);
