@@ -74,7 +74,7 @@
                         </li>
                     <% } else { %> 
                         <li class="nav-item">
-                            <a class="p-2" href="#">ようこそ！<strong><%= currentUser %></strong>さん</a>
+                            <a class="p-2" href="#">ようこそ！<strong><%= currentUser.displayName %></strong>さん</a>
                             <a class="btn btn-primary" href="/logout">ログアウト</a>
                         </li>
                     <%  } %>
