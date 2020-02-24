@@ -108,12 +108,14 @@ cron.schedule('0 0 */1 * * *', () => {
 //   }
 // ));
 
+app.enable("trust proxy");
+
 passport.use(
   new FacebookStrategy(
     {
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
-        callbackURL: 'https://3d54c828380540d6855b9a29eadce06d.vfs.cloud9.ap-northeast-1.amazonaws.com/return'
+        callbackURL: '/return'
     },
     (accessToken, refreshToken, profile, done) => {
       if (!profile) {
