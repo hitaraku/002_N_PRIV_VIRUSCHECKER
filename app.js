@@ -172,8 +172,12 @@ app.get('/login',
     res.render('login');
   });
 
-app.get('/login/facebook',
-  passport.authenticate('facebook'));
+app.get(
+  '/login/facebook',
+  passport.authenticate('facebook', {
+    scope: ['public_profile']
+  })
+);
 
 app.get('/return', 
   passport.authenticate('facebook', { failureRedirect: '/login' }),
