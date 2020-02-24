@@ -102,7 +102,7 @@ passport.use(
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
         callbackURL: '/return',
-        profileFields: ['id', 'email', 'displayName']
+        profileFields: ['id', 'emails', 'displayName']
     },
     (accessToken, refreshToken, profile, done) => {
       if (!profile) {
@@ -117,10 +117,15 @@ passport.use(
           if (existingUser) {
             done(null, existingUser);
           } else {
+            var notfoundemail = "";
+            if (!profile.emails || !profile.emails[0].value || !profile._json.email) {
+                notfoundemail = "notfound";
+            }
+            let email = profile.emails[0].value || profile._json.email || notfoundemail;
             new User({
               displayName: profile.displayName,
               facebookId: profile.id,
-              email: profile.email
+              email: email
             })
               .save()
               .then(user => done(null, user));
