@@ -93,21 +93,7 @@ cron.schedule('0 0 */1 * * *', () => {
 /**************************
 * Configure Facebook Passport 
 **************************/
-// passport.use(new FacebookStrategy({
-//     clientID: process.env.FACEBOOK_APP_ID,
-//     clientSecret: process.env.FACEBOOK_APP_SECRET,
-//     callbackURL: 'https://n-priv-viruschecker-002-stg.herokuapp.com/return'
-//   },
-//   function(accessToken, refreshToken, profile, cb) {
-//     // In this example, the user's Facebook profile is supplied as the user
-//     // record.  In a production-quality application, the Facebook profile should
-//     // be associated with a user record in the application's database, which
-//     // allows for account linking and authentication with other identity
-//     // providers.
-//     return cb(null, profile);
-//   }
-// ));
-
+// for SSL enable callbackURL
 app.enable("trust proxy");
 
 passport.use(
@@ -129,7 +115,8 @@ passport.use(
           } else {
             new User({
               displayName: profile.displayName,
-              facebookId: profile.id
+              facebookId: profile.id,
+              facebookEamil: profile.emails
             })
               .save()
               .then(user => done(null, user));
@@ -171,7 +158,8 @@ passport.deserializeUser(function(obj, cb) {
 //     opportunityRoutes   = require("./routes/opportunity"),
 //     indexRoutes         = require("./routes/index");
     
-var indexRoutes         = require("./routes/index");
+var indexRoutes         = require("./routes/index"),
+    userRoutes          = require("./routes/user");
 
 /**************************
 * Configure for API, css, ejs...
@@ -193,37 +181,12 @@ app.use(passport.session());
 * Configure For Routes
 **************************/
 app.use("/", indexRoutes);
-// app.use("/shopowners", shopownerRoutes);
+app.use("/users", userRoutes);
 // app.use("/opportunitys", opportunityRoutes);
 
-// Define routes.
-app.get('/login',
-  function(req, res){
-    res.render('login');
-  });
-
-app.get(
-  '/login/facebook',
-  passport.authenticate('facebook', {
-    scope: ['public_profile']
-  })
-);
-
-app.get('/return', 
-  passport.authenticate('facebook', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    res.render('profile', { user: req.user });
-  });
-  
 //The 404 Route (ALWAYS Keep this as the last route)
 app.get('*', function(req, res){
-  res.send('what???', 404);
+  res.render("notfound");
 });
 
 /**************************
