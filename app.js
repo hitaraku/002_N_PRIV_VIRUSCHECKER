@@ -9,7 +9,7 @@ const express       = require("express"),
     // passport      = require("passport"),
     // LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    // User           = require("./models/user"),
+    User           = require("./models/user"),
     // ShopOwner      = require("./models/shopowner"),
     // Category1      = require("./models/category1"),
     // Category2      = require("./models/category2"),
@@ -93,22 +93,50 @@ cron.schedule('0 0 */1 * * *', () => {
 /**************************
 * Configure Facebook Passport 
 **************************/
-const fbAppId = process.env.FACEBOOK_APP_ID;
-const fbAppSecret = process.env.FACEBOOK_APP_SECRET;
-passport.use(new FacebookStrategy({
-    clientID: process.env.FACEBOOK_APP_ID,
-    clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: 'https://n-priv-viruschecker-002-stg.herokuapp.com/return'
-  },
-  function(accessToken, refreshToken, profile, cb) {
-    // In this example, the user's Facebook profile is supplied as the user
-    // record.  In a production-quality application, the Facebook profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
-    return cb(null, profile);
-  }
-));
+// passport.use(new FacebookStrategy({
+//     clientID: process.env.FACEBOOK_APP_ID,
+//     clientSecret: process.env.FACEBOOK_APP_SECRET,
+//     callbackURL: 'https://n-priv-viruschecker-002-stg.herokuapp.com/return'
+//   },
+//   function(accessToken, refreshToken, profile, cb) {
+//     // In this example, the user's Facebook profile is supplied as the user
+//     // record.  In a production-quality application, the Facebook profile should
+//     // be associated with a user record in the application's database, which
+//     // allows for account linking and authentication with other identity
+//     // providers.
+//     return cb(null, profile);
+//   }
+// ));
+
+passport.use(
+  new FacebookStrategy(
+    {
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: 'https://3d54c828380540d6855b9a29eadce06d.vfs.cloud9.ap-northeast-1.amazonaws.com/return'
+    },
+    (accessToken, refreshToken, profile, done) => {
+      if (!profile) {
+        return done(null, false);
+      }
+
+      User.findOne({ facebookId: profile.id })
+        .then(existingUser => {
+          if (existingUser) {
+            done(null, existingUser);
+          } else {
+            new User({
+              displayName: profile.displayName,
+              facebookId: profile.id
+            })
+              .save()
+              .then(user => done(null, user));
+          }
+        })
+        .catch(err => done(err, null));
+    }
+  )
+);
 
 // Configure Passport authenticated session persistence.
 //
