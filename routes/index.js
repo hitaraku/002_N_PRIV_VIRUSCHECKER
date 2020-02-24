@@ -1,6 +1,7 @@
 var express     = require("express"),
     router      = express.Router(),
-    Coronavirustimeline = require("../models/coronavirustimeline");
+    Coronavirustimeline = require("../models/coronavirustimeline"),
+    Coronavirustimelineinjapan = require("../models/coronavirustimelineinjapan");
     // passport    = require("passport"),
     // assistant   = require("../middleware/watson_assistant"),
     // User        = require("../models/user");
@@ -24,6 +25,17 @@ router.get("/", function(req, res){
    });
 });
 
-
+// In Japan
+router.get("/japan", function(req, res){
+    // For show all opportunitys
+    Coronavirustimelineinjapan.findOne({}).sort({ gotDate: 'desc'}).exec(function(err, latestCoronavirustimeline){
+        if(err) {
+            console.log(err);
+        } else {
+            console.log( "array: " + latestCoronavirustimeline.cornavirusoverallinjapan);
+            res.render("japan", {coronavirustimelinesinjapan: latestCoronavirustimeline.cornavirusoverallinjapan, gotDate: latestCoronavirustimeline.gotDate});
+        }
+   });
+});
 
 module.exports = router;

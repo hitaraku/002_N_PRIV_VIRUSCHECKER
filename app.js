@@ -16,10 +16,12 @@ const express       = require("express"),
     // Opportunity      = require("./models/opportunity"),
     // Assistant      = require("./middleware/watson_assistant"),
     Coronavirustimeline     = require("./models/coronavirustimeline"),
+    Coronavirustimelineinjapan = require("./models/coronavirustimelineinjapan"),
     // Coronavirusrumors       = require("./models/coronavirusrumors"),
     dateFormat  = require('dateformat'),
-    https            = require("https"),
-    fs             = require("fs"),
+    https             = require("https"),
+    fs                = require("fs"),
+    csv               = require("csv"),
     cron = require('node-cron');
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
@@ -130,5 +132,25 @@ app.listen(process.env.PORT, process.env.IP, function() {
 
 
 /**************************
-* Get Data From CoronaVirus
+* CSV Parser
 **************************/
+// fs.createReadStream(__dirname + '/public/test3.csv').pipe(csv.parse({columns: true}, function(err, data) {
+//     if(err) {
+//         console.log("error csvStream: " + err);
+//     } else {
+//         var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
+//         var fbData = JSON.parse(JSON.stringify(data));
+//         var newCoronavirustimelineinjapan = {
+//             cornavirusoverallinjapan: fbData,
+//             gotDate: dateTime,
+//         }        
+//         // create a new shopuser and save to DB.
+//         Coronavirustimelineinjapan.create(newCoronavirustimelineinjapan, function(err, newlyCreated){
+//             if(err) {
+//                 console.log(err);
+//             } else {
+//                 console.log("success store cornavirus to database");
+//             }
+//         });
+//     }
+// }));

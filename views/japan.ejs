@@ -1,0 +1,82 @@
+<% include partials/header %>
+
+    <div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>コロナウイルス簡易チェッカー(日本国内状況)</h1>
+            <p>現在のコロナウイルス感染者の統計を確認する為のサイトです。</p>
+            <p>※参考サイト：<a href="https://www.mhlw.go.jp/stf/newpage_09690.html">新型コロナウイルス感染症の現在の状況と厚生労働省の対応について（令和２年２月21日版）</a></p>
+            <p>国内事例（チャーター便帰国者を除く）<br />2月20日12:00時点の確認されている国内の発生状況は以下のとおり。<br />【国内事例（チャーター便帰国者を除く）】</p>
+            <p>（注）： 14例目は中華人民共和国に帰国しているため、現在の状況は不明。<br />
+　　　　 18例目は死亡例。<br />
+　　　　 その他、10例の無症状病原体保有者が確認されている。</p>
+        </div>
+    </header>
+    <%
+        const countryNameDictionary = [
+            ["冰岛", "爱尔兰", "阿塞拜疆", "阿富汗", "美国", "阿拉伯联合酋长国", "阿尔及利亚", "阿根廷", "阿尔巴尼亚", "亚美尼亚", "安哥拉", "安提瓜和巴布达", "安道尔", "也门", "英国", "以色列", "意大利", "伊拉克", "伊朗", "印度", "印度尼西亚", "乌干达", "乌克兰", "乌兹别克斯坦", "乌拉圭", "厄瓜多尔", "埃及", "爱沙尼亚", "埃塞俄比亚", "厄立特里亚", "萨尔瓦多", "澳大利亚", "奥地利", "阿曼", "荷兰", "加纳", "佛得角", "圭亚那", "哈萨克斯坦", "卡塔尔", "加拿大", "加蓬", "喀麦隆", "韩国", "冈比亚", "柬埔寨", "朝鲜", "几内亚", "几内亚比绍", "塞浦路斯", "古巴", "希腊", "基里巴斯", "吉尔吉斯斯坦", "危地马拉", "科威特", "格鲁吉亚", "格林纳达", "克罗地亚", "肯尼亚", "科特迪瓦", "哥斯达黎加", "科摩罗", "哥伦比亚", "刚果", "刚果民主共和国", "沙特阿拉伯", "萨摩亚", "圣多美和普林西比", "赞比亚", "圣马力诺", "塞拉利昂", "吉布提", "牙买加", "叙利亚", "新加坡", "津巴布韦", "瑞士", "瑞典", "苏丹", "西班牙", "苏里南", "斯里兰卡", "斯洛伐克", "斯洛文尼亚", "斯威士兰", "塞舌尔", "赤道几内亚", "塞内加尔", "塞尔维亚", "圣基茨和尼维斯", "圣文森特和格林纳丁斯", "圣卢西亚", "索马里", "所罗门群岛", "泰国", "塔吉克斯坦", "坦桑尼亚", "捷克", "乍得", "中非", "中国", "突尼斯", "智利", "图瓦卢", "丹麦", "德国", "多哥", "多米尼加共和国", "多米尼克", "特立尼达和多巴哥", "土库曼斯坦", "土耳其", "汤加", "尼日利亚", "瑙鲁", "纳米比亚", "尼加拉瓜", "尼日尔", "日本", "新西兰", "尼泊尔", "挪威", "巴林", "海地", "巴基斯坦", "巴拿马", "瓦努阿图", "巴哈马", "巴布亚新几内亚", "帕劳", "巴拉圭", "巴巴多斯", "匈牙利", "孟加拉国", "东帝汶", "斐济", "菲律宾", "芬兰", "不丹", "巴西", "法国", "保加利亚", "布基纳法索", "文莱", "布隆迪", "越南", "贝宁", "委内瑞拉", "白俄罗斯", "伯利兹", "秘鲁", "比利时", "波兰", "波斯尼亚和黑塞哥维那", "博茨瓦纳", "玻利维亚", "葡萄牙", "洪都拉斯", "马绍尔群岛", "马其顿", "马达加斯加", "马拉维", "马里", "马耳他", "马来西亚", "密克罗尼西亚", "南非", "南苏丹", "缅甸", "墨西哥", "毛里求斯", "毛里塔尼亚", "莫桑比克", "摩纳哥", "马尔代夫", "摩尔多瓦", "摩洛哥", "蒙古", "黑山", "约旦", "老挝", "拉脱维亚", "立陶宛", "利比亚", "列支敦士登", "利比里亚", "罗马尼亚", "卢森堡", "卢旺达", "莱索托", "黎巴嫩", "俄罗斯", "阿联酋", "钻石公主号邮轮"],
+            ["アイスランド", "アイルランド", "アゼルバイジャン", "アフガニスタン", "アメリカ", "アラブ首長国連邦", "アルジェリア", "アルゼンチン", "アルバニア", "アルメニア", "アンゴラ", "アンティグア・バーブーダ", "アンドラ", "イエメン", "イギリス", "イスラエル", "イタリア", "イラク", "イラン", "インド", "インドネシア", "ウガンダ", "ウクライナ", "ウズベキスタン", "ウルグアイ", "エクアドル", "エジプト", "エストニア", "エチオピア", "エリトリア", "エルサルバドル", "オーストラリア", "オーストリア", "オマーン", "オランダ", "ガーナ", "カーボヴェルデ", "ガイアナ", "カザフスタン", "カタール", "カナダ", "ガボン", "カメルーン", "韓国", "ガンビア", "カンボジア", "北朝鮮", "ギニア", "ギニアビサウ", "キプロス", "キューバ", "ギリシャ", "キリバス", "キルギス", "グアテマラ", "クウェート", "グルジア", "グレナダ", "クロアチア", "ケニア", "コートジボワール", "コスタリカ", "コモロ", "コロンビア", "コンゴ共和国", "コンゴ民主共和国", "サウジアラビア", "サモア", "サントメ・プリンシペ", "ザンビア", "サンマリノ", "シエラレオネ", "ジブチ", "ジャマイカ", "シリア", "シンガポール", "ジンバブエ", "スイス", "スウェーデン", "スーダン", "スペイン", "スリナム", "スリランカ", "スロバキア", "スロベニア", "スワジランド", "セーシェル", "赤道ギニア", "セネガル", "セルビア", "セントクリストファー・ネーヴィス", "セントビンセント・グレナディーン", "セントルシア", "ソマリア", "ソロモン諸島", "タイ", "タジキスタン", "タンザニア", "チェコ", "チャド", "中央アフリカ", "中国", "チュニジア", "チリ", "ツバル", "デンマーク", "ドイツ", "トーゴ", "ドミニカ共和国", "ドミニカ国", "トリニダード・トバゴ", "トルクメニスタン", "トルコ", "トンガ", "ナイジェリア", "ナウル", "ナミビア", "ニカラグア", "ニジェール", "日本", "ニュージーランド", "ネパール", "ノルウェー", "バーレーン", "ハイチ", "パキスタン", "パナマ", "バヌアツ", "バハマ", "パプアニューギニア", "パラオ", "パラグアイ", "バルバドス", "ハンガリー", "バングラデシュ", "東ティモール", "フィジー", "フィリピン", "フィンランド", "ブータン", "ブラジル", "フランス", "ブルガリア", "ブルキナファソ", "ブルネイ", "ブルンジ", "ベトナム", "ベナン", "ベネズエラ", "ベラルーシ", "ベリーズ", "ペルー", "ベルギー", "ポーランド", "ボスニア・ヘルツェゴビナ", "ボツワナ", "ボリビア", "ポルトガル", "ホンジュラス", "マーシャル諸島", "マケドニア共和国", "マダガスカル", "マラウイ", "マリ", "マルタ", "マレーシア", "ミクロネシア", "南アフリカ", "南スーダン", "ミャンマー", "メキシコ", "モーリシャス", "モーリタニア", "モザンビーク", "モナコ", "モルディブ", "モルドバ", "モロッコ", "モンゴル", "モンテネグロ", "ヨルダン", "ラオス", "ラトビア", "リトアニア", "リビア", "リヒテンシュタイン", "リベリア", "ルーマニア", "ルクセンブルク", "ルワンダ", "レソト", "レバノン", "ロシア", "アラブ首長国連邦","ダイヤモンドプリンセスクルーズ"],
+            ["Iceland", "Ireland", "Azerbaijan", "Afghanistan", "United States", "United arab emirates", "Algeria", "Argentina", "Albania", "Armenia", "Angola", "Antigua and Barbuda", "Andorra", "Yemen", "United Kingdom", "Israel", "Italy", "Iraq", "Iran", "India", "Indonesia", "Uganda", "Ukraine", "Uzbekistan", "Uruguay", "Ecuador", "Egypt", "Estonia", "Ethiopia", "Eritrea", "El Salvador", "Australia", "Austria", "Oman", "Netherlands", "Ghana", "Cape verde", "Guyana", "Kazakhstan", "Qatar", "Canada", "Gabon", "Cameroon", "Korea", "Gambia", "Cambodia", "Korea", "Guinea", "Guinea-Bissau", "Cyprus", "Cuba", "Greece", "Kiribati", "Kyrgyzstan", "Guatemala", "Kuwait", "Georgia", "Grenada", "Croatia", "Kenya", "Ivory Coast", "Costa rica", "Comoros", "Colombia", "Congo", "Democratic Republic of the Congo", "Saudi Arabia", "Samoa", "Sao Tome and Principe", "Zambia", "San Marino", "Sierra Leone", "Djibouti", "Jamaica", "Syria", "Singapore", "Zimbabwe", "Switzerland", "Sweden", "Sudan", "Spain", "Suriname", "Sri Lanka", "Slovakia", "Slovenia", "Swaziland", "Seychelles", "Equatorial Guinea", "Senegal", "Serbia", "Saint Kitts and Nevis", "Saint Vincent and the Grenadines", "St. Lucia", "Somalia", "Solomon Islands", "Thailand", "Tajikistan", "Tanzania", "Czech Republic", "Chad", "Central Africa", "China", "Tunisia", "Chile", "Tuvalu", "Denmark", "Germany", "Togo", "Dominican Republic", "Dominic", "Trinidad and Tobago", "Turkmenistan", "Turkey", "Tonga", "Nigeria", "Nauru", "Namibia", "Nicaragua", "Niger", "Japan", "new Zealand", "Nepal", "Norway", "Bahrain", "Haiti", "Pakistan", "Panama", "Vanuatu", "Bahamas", "Papua New Guinea", "Palau", "Paraguay", "Barbados", "Hungary", "Bangladesh", "East Timor", "Fiji", "Philippines", "Finland", "Bhutan", "Brazil", "France", "Bulgaria", "Burkina Faso", "Brunei", "Burundi", "Vietnam", "Benin", "Venezuela", "Belarus", "Belize", "Peru", "Belgium", "Poland", "Bosnia and Herzegovina", "Botswana", "Bolivia", "Portugal", "Honduras", "Marshall Islands", "Macedonia", "Madagascar", "Malawi", "Mali", "Malta", "Malaysia", "Micronesia", "South Africa", "South Sudan", "Myanmar", "Mexico", "Mauritius", "Mauritania", "Mozambique", "Monaco", "Maldives", "Moldova", "Morocco", "Mongolia", "Montenegro", "Jordan", "Laos", "Latvia", "Lithuania", "Libya", "Liechtenstein", "Liberia", "Romania", "Luxembourg", "Rwanda", "Lesotho", "Lebanon", "Russia", "UAE", "Diamond Princess Cruises"]
+        ];
+    %>
+    <%
+    // show date
+    function dateToStr24H(date, format) {
+        if (!format) {
+            format = 'Y/M/D h:m:s';
+        }
+        format = format.replace(/Y/g, date.getFullYear());
+        format = format.replace(/M/g, (date.getMonth() + 1));
+        format = format.replace(/D/g, date.getDate());
+        format = format.replace(/h/g, date.getHours());
+        format = format.replace(/m/g, date.getMinutes());
+        format = format.replace(/s/g, date.getSeconds());
+        return format;
+    }
+    %>
+    
+    <div class="row">
+        <%= "データ取得日時: " + dateToStr24H(gotDate, 'Y年M月D日 h時m分') %>
+    </div>
+    
+    <div class="row" style="display:flex; flex-wrap: wrap;">
+        <table class="table table-striped  table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">新No.</th>
+              <th scope="col">旧No.</th>
+              <th scope="col">確定日</th>
+              <th scope="col">年代</th>
+              <th scope="col">性別</th>
+              <th scope="col">居住地</th>
+              <th scope="col">周囲の患者の発生※</th>
+              <th scope="col">濃厚接触者の状況</th>
+            </tr>
+							            
+          </thead>
+        　<tbody>
+        　  <% coronavirustimelinesinjapan.forEach(function(coronavirustimeline, i){ %>
+                <tr>
+                <th scope="row"><%= i+1 %></th>
+                <td><%= coronavirustimeline.newno %></td>
+                <td><%= coronavirustimeline.oldno %></td>
+                <td><%= coronavirustimeline.decitiondate %></td>
+                <td><%= coronavirustimeline.older %></td>
+                <td><%= coronavirustimeline.sex %></td>
+                <td><%= coronavirustimeline.place %></td>
+                <td><%= coronavirustimeline.arroundpatient %></td>
+                <td><%= coronavirustimeline.situation %></td>
+                </tr>
+            <% }); %>
+          </tbody>
+        </table>
+    </div>
+
+    <!-- Adsense -->
+    <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hitaraku12-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B01CNF4866&linkId=bbc70a53443910a3e9cca252757516d6"></iframe>
+    <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-fe.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=hitaraku12-22&language=ja_JP&o=9&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07BQZDB2C&linkId=868a90074935a2ba04de941e609f3ee9"></iframe>
+    
+    </div>
+
+<% include partials/footer %>
