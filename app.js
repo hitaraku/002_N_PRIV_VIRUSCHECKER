@@ -144,14 +144,6 @@ passport.deserializeUser(function(obj, cb) {
   cb(null, obj);
 });
 
-// configuser
-app.use(function(req, res, next){
-    res.locals.currentUser = req.user;
-    res.locals.error = req.flash("error");
-    res.locals.success = req.flash("success");
-    next();
-});
-
 /**************************
 * UploadFile 'express-fileupload'
 **************************/
@@ -182,8 +174,21 @@ app.use(flash());
 * Initialize Passport and restore authentication state, if any, 
 * from the session
 **************************/
+app.use(require("express-session")({
+    secret: "Once again Rusty again",
+    resave: false,
+    saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+// configuser for currentuser
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
+});
 
 /**************************
 * Configure For Routes

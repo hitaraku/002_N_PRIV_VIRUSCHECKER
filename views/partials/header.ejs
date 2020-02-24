@@ -71,12 +71,11 @@
                     <% if(!currentUser) { %>
                         <li class="nav-item">
                             <a class="btn btn-primary" href="/login">ログイン</a>
-                            <a class="btn btn-outline-primary" href="/logout">ログアウト</a>
                         </li>
                     <% } else { %> 
                         <li class="nav-item">
                             <a class="p-2" href="#">ようこそ！<strong><%= currentUser.username %></strong>さん</a>
-                            <a class="btn btn-primary" href="/logout">Logout</a>
+                            <a class="btn btn-primary" href="/logout">ログアウト</a>
                         </li>
                     <%  } %>
                 </ul>
