@@ -98,7 +98,7 @@ const fbAppSecret = process.env.FACEBOOK_APP_SECRET;
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,
     clientSecret: process.env.FACEBOOK_APP_SECRET,
-    callbackURL: '/'
+    callbackURL: 'https://n-priv-viruschecker-002-stg.herokuapp.com/return'
   },
   function(accessToken, refreshToken, profile, cb) {
     // In this example, the user's Facebook profile is supplied as the user
