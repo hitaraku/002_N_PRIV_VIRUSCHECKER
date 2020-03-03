@@ -41,67 +41,68 @@
     var womanAgeArray = [0,0,0,0,0,0,0];
     coronavirustimelinesinjapan.forEach(function(coronavirustimeline){ 
         var mOlder = coronavirustimeline.older;
+        mOlder = mOlder.replace(/代/g, '');
         if(coronavirustimeline.sex == "男") {
             console.log(mOlder);
             switch(mOlder) {
-                case mOlder == "10代" :
+                case "10" :
                     if(mOlder.match(/^1/g) && !mOlder.match(/^100/g)) {
                         manAgeArray[0] += 1;
                     }
                     break;                    
-                case mOlder == "20代" :
+                case "20" :
                         manAgeArray[1] += 1;
                     break;                    
-                case mOlder == "30代" :
+                case "30" :
                         manAgeArray[2] += 1;
                     break;                    
-                case mOlder.match(/^4/) :
+                case "40" :
                         manAgeArray[3] += 1;
                     break;                    
-                case mOlder.match(/^5/) :
+                case "50" :
                         manAgeArray[4] += 1;
                     break;                    
-                case mOlder.match(/^6/gi) :
+                case "60" :
                         manAgeArray[5] += 1;
                     break;                    
-                case mOlder.match(/^7/g) :
-                case mOlder.match(/^8/g) :
-                case mOlder.match(/^9/g) :
+                case "70" :
+                case "80" :
+                case "90" :
                         manAgeArray[6] += 1;
                     break;                    
                 default:
-                    console.log(manAgeArray);
                     break;
             }
+            // For array check
+            //console.log(manAgeArray);
         } else {
             switch(mOlder) {
-                case mOlder.match(/^1/) :
-                    if(mOlder.match(/^1/) && !mOlder.match(/^100/)) {
+                case "10" :
+                    if(mOlder.match(/^1/g) && !mOlder.match(/^100/g)) {
                         womanAgeArray[0] += 1;
                     }
                     break;                    
-                case mOlder.match(/^2/) :
+                case "20" :
                         womanAgeArray[1] += 1;
                     break;                    
-                case mOlder.match(/^3/) :
+                case "30" :
                         womanAgeArray[2] += 1;
                     break;                    
-                case mOlder.match(/^4/) :
+                case "40" :
                         womanAgeArray[3] += 1;
                     break;                    
-                case mOlder.match(/^5/) :
+                case "50" :
                         womanAgeArray[4] += 1;
                     break;                    
-                case mOlder.match(/^6/) :
+                case "60" :
                         womanAgeArray[5] += 1;
                     break;                    
-                case mOlder.match(/^7/) :
-                case mOlder.match(/^8/) :
-                case mOlder.match(/^9/) :
+                case "70" :
+                case "80" :
+                case "90" :
                         womanAgeArray[6] += 1;
                     break;                    
                 default:
-                    console.log("onna");
                     break;
             }
         }
@@ -120,26 +121,26 @@
 				borderColor: window.chartColors.red,
 				borderWidth: 1,
 				data: [
-					<%= womanAgeArray[0] %>,
-					<%= womanAgeArray[1] %>,
-					<%= womanAgeArray[2] %>,
-					<%= womanAgeArray[3] %>,
-					<%= womanAgeArray[4] %>,
+					<%= womanAgeArray[6] %>,
 					<%= womanAgeArray[5] %>,
-					<%= womanAgeArray[6] %>
+					<%= womanAgeArray[4] %>,
+					<%= womanAgeArray[3] %>,
+					<%= womanAgeArray[2] %>,
+					<%= womanAgeArray[1] %>,
+					<%= womanAgeArray[0] %>
 				]
 			}, {
 				label: '男性',
 				backgroundColor: color(window.chartColors.blue).alpha(0.5).rgbString(),
 				borderColor: window.chartColors.blue,
 				data: [
-				    <%= manAgeArray[0] %>,
-					<%= manAgeArray[1] %>,
-					<%= manAgeArray[2] %>,
-					<%= manAgeArray[3] %>,
-					<%= manAgeArray[4] %>,
+				    <%= manAgeArray[6] %>,
 					<%= manAgeArray[5] %>,
-					<%= manAgeArray[6] %>
+					<%= manAgeArray[4] %>,
+					<%= manAgeArray[3] %>,
+					<%= manAgeArray[2] %>,
+					<%= manAgeArray[1] %>,
+					<%= manAgeArray[0] %>
 				]
 			}]
 
