@@ -6,6 +6,7 @@ const express       = require("express"),
     bodyParser    = require("body-parser"), 
     mongoose      = require("mongoose"),
     flash         = require("connect-flash"),
+    sitemap = require('express-sitemap'),
     // passport      = require("passport"),
     // LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
@@ -17,6 +18,7 @@ const express       = require("express"),
     // Assistant      = require("./middleware/watson_assistant"),
     Coronavirustimeline     = require("./models/coronavirustimeline"),
     Coronavirustimelineinjapan = require("./models/coronavirustimelineinjapan"),
+    Wptimeline                 = require("./models/wptimeline"),
     // Coronavirusrumors       = require("./models/coronavirusrumors"),
     dateFormat  = require('dateformat'),
     https             = require("https"),
@@ -25,6 +27,7 @@ const express       = require("express"),
     cron = require('node-cron');
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
+
     
 /**************************
 * Mongoose Connection
@@ -55,6 +58,8 @@ mongoose.connect(connecturl, function(err, db){
 **************************/
 const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
+      
+     
 
 // schedule get coronavirus from web to store mongodb
 cron.schedule('0 0 */1 * * *', () => {
@@ -89,13 +94,66 @@ cron.schedule('0 0 */1 * * *', () => {
     }).on('error', function(e){
           console.log("Got an error: ", e);
     });
+    
+    // For get json from Wordpress
+    var url = "https://virus.evelinks.org/wp-json/wp/v2/posts"
+    var wpPostUrlJson = url /* + "?_fields=author,id,excerpt,title,link" */;
+    https.get(wpPostUrlJson, function(res){
+        var body = '';
+        var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
+
+        res.on('data', function(chunk){
+            body += chunk;
+        });
+    
+        res.on('end', function(){
+            try {
+                var wpResponse = JSON.parse(body); 
+                var newWptimeline = {
+                    wpPostsAll: wpResponse,
+                    gotDate: dateTime,
+                }
+                // create a new shopuser and save to DB.
+                Wptimeline.create(newWptimeline, function(err, newlyCreated){
+                    if(err) {
+                        console.log(err);
+                    } else {
+                        console.log("success store wordpress article title to database");
+                    }
+                });
+            } catch (e) {
+                console.log("Error Got a HTML : ", e);
+            }
+        });
+    }).on('error', function(e){
+        console.log("Got an error: ", e);
+    });
 });
+
 
 /**************************
 * UploadFile 'express-fileupload'
 **************************/
 // default options
 // app.use(fileUpload());
+
+/**************************
+* Configure For Redirect (HTTPS)
+**************************/
+app.get('*',function(req, res,next){
+  if(req.headers['x-forwarded-proto']!='https') {
+        // res.redirect('https://mypreferreddomain.com'+req.url);
+      if(req.hostname == 'viruschecker.tokyo') {
+        res.redirect(`https://www.${req.hostname}${req.url}`);
+      } else {
+        res.redirect(`https://${req.hostname}${req.url}`);
+        console.log("req.hostname : " + req.hostname);
+        console.log("req.url : " + req.url);
+      }
+  } else {
+    next(); /* Continue to other routes if we're not redirecting */  
+  }
+});
 
 /**************************
 * Require For Route
@@ -123,8 +181,55 @@ app.use("/", indexRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
 
+
 /**************************
-* Configure For Listen (HTTP)
+* Configure For Routes
+**************************/
+// sitemap({
+//   http: 'https',
+// //   url: 'www.viruschecker.tokyo',
+//   url: '3d54c828380540d6855b9a29eadce06d.vfs.cloud9.ap-northeast-1.amazonaws.com',
+//   generate: app,
+//   route: {
+//     '/': {
+//       lastmod: '2020-03-01',
+//       changefreq: 'always',
+//       priority: 1.0,
+//       alternatepages: [
+//       {
+//         rel: 'alternate',
+//         hreflang: 'ja',
+//         // href: 'https://www.viruschecker.tokyo/'
+//         href: 'https://3d54c828380540d6855b9a29eadce06d.vfs.cloud9.ap-northeast-1.amazonaws.com'
+//       }]
+//     },
+//   },
+// }).toFile();
+
+// sitemap({
+//     map: {
+//         '/foo': ['get'],
+//         '/foo2': ['get','post'],
+//         '/admin': ['get'],
+//         '/backdoor': [],
+//     },
+//     route: {
+//         '/foo': {
+//             lastmod: '2014-06-20',
+//             changefreq: 'always',
+//             priority: 1.0,
+//         },
+//         '/admin': {
+//             disallow: true,
+//         },
+//         '/backdoor': {
+//             hide: true,
+//         },
+//     },
+// }).XMLtoFile();
+
+/**************************
+* Configure For Listen (HTTPS)
 **************************/
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Coronaviurs start!!");
@@ -132,7 +237,7 @@ app.listen(process.env.PORT, process.env.IP, function() {
 
 
 /**************************
-* CSV Parser
+* CSV Parser For store japanese people coronaviurus situation.
 **************************/
 // fs.createReadStream(__dirname + '/public/test3.csv').pipe(csv.parse({columns: true}, function(err, data) {
 //     if(err) {
