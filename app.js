@@ -24,6 +24,7 @@ const express       = require("express"),
     https             = require("https"),
     fs                = require("fs"),
     csv               = require("csv"),
+    middleware  = require("./middleware/index.js"),
     cron = require('node-cron');
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
@@ -59,10 +60,9 @@ mongoose.connect(connecturl, function(err, db){
 const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
       
-     
-
 // schedule get coronavirus from web to store mongodb
 cron.schedule('0 0 */1 * * *', () => {
+    // Get Date from china goverment about Coronavirus
     https.get(areaUrl, function(res){
         var body = '';
         var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
@@ -128,8 +128,10 @@ cron.schedule('0 0 */1 * * *', () => {
     }).on('error', function(e){
         console.log("Got an error: ", e);
     });
+    
+    // store dictionary to mongodatabase
+    middleware.namedic();
 });
-
 
 /**************************
 * UploadFile 'express-fileupload'
