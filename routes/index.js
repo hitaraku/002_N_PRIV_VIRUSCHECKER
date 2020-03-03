@@ -4,6 +4,7 @@ var express     = require("express"),
     fs                = require("fs"),
     Wptimeline = require("../models/wptimeline"),
     Coronavirustimeline = require("../models/coronavirustimeline"),
+    Countrydictionary = require("../models/countrydictionary"),
     Coronavirustimelineinjapan = require("../models/coronavirustimelineinjapan");
     // passport    = require("passport"),
     // assistant   = require("../middleware/watson_assistant"),
@@ -26,7 +27,18 @@ router.get("/", function(req, res){
                 if(err) {
                     console.err("Wptimeline err: " + err);
                 } else {
-                    res.render("landing", {wptimelines: latestWptimeline.wpPostsAll, coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, gotDate: latestCoronavirustimeline.gotDate});
+                    Countrydictionary.find({}).exec(function(err, latestCountrydictionarys) {
+                        if(err) {
+                            console.log(err);
+                        } else {
+                            res.render("landing", {
+                                wptimelines: latestWptimeline.wpPostsAll, 
+                                coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, 
+                                countrydictionarys: latestCountrydictionarys,
+                                gotDate: latestCoronavirustimeline.gotDate
+                            });
+                        }
+                    });
                 }
             });
             // res.render("landing", {coronavirustimelines: latestCoronavirustimeline.cornavirusoverall.results, gotDate: latestCoronavirustimeline.gotDate});
