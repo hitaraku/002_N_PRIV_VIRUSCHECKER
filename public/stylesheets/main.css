@@ -1,4 +1,39 @@
+@charset "UTF-8";
+
+/***************** 
+* COMMON 
+******************/
+ul, ol {
+    list-style-type: none;
+    padding: 0px;
+}
+
+/***************** 
+* BODY
+******************/
+
+/* latest_news_line */
+.latest_news_category {
+    background-color: #7a00b9;
+}
+
+#latest_news_line ul li:first-child {
+    padding-top: 10px;
+    border-top: 1px dotted #b2b2b2;
+}
+
+#latest_news_line ul li {
+    padding: 0 0 10px;
+    margin-bottom: 10px;
+    line-height: 1.7em;
+    border-bottom: 1px dotted #b2b2b2;
+}
+
+/***************** 
+* FOOTER 
+******************/
 .footer-background {
     background-color: #434343;
     margin: 10px 0 0 0;
 }
+
