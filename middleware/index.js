@@ -6,7 +6,7 @@ var Coronavirustimeline = require("../models/coronavirustimeline"),
 **/
 const projectId = 'n-priv-viruschecker';
 const location = 'global';
-const text = '英国（含北爱尔兰）';
+// const text = '英国（含北爱尔兰）';
 
 // Imports the Google Cloud Translation library
 const {TranslationServiceClient} = require('@google-cloud/translate');
@@ -40,14 +40,14 @@ async function translateText(sourceString, targetString, textString) {
             // english: String,
             // spanish: String,
             gotDate: dateTime,
-        }          
+        };       
 
         // create a new Countrydictionary to DB.
         Countrydictionary.create(newCountrydictionary, function(err, newlyCreated){
             if(err) {
-                console.log(err);
+                console.log("error create translate jp-JP: " + err);
             } else {
-                console.log("success store cornavirus to database");
+                console.log("success store dictionary to database :" + newlyCreated);
             }
         });
       } else if(targetString == "en") {
@@ -57,7 +57,7 @@ async function translateText(sourceString, targetString, textString) {
           console.log("english translation.translatedText : " + translation.translatedText);
           Countrydictionary.findOneAndUpdate(filter, update).exec(function(err, a){
                 if(err) {
-                    console.log(err);
+                    console.log("error create translate en: " + err);
                 } else {
                     // none
                 }
@@ -69,7 +69,7 @@ async function translateText(sourceString, targetString, textString) {
           console.log("spanish translation.translatedText : " + translation.translatedText);
           Countrydictionary.findOneAndUpdate(filter, update).exec(function(err, a){
                 if(err) {
-                    console.log(err);
+                    console.log("error create translate es: " + err);
                 } else {
                     // none
                 }

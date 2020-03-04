@@ -86,7 +86,11 @@ cron.schedule('0 0 */1 * * *', () => {
                         console.log("success store cornavirus to database");
                     }
                 });
+                
                 console.log("Got a response: ", fbResponse.picture);
+
+                // store dictionary to mongodatabase
+                middleware.namedic();
             } catch (e) {
                 console.log("Error Got a HTML : ", e);
             }
@@ -128,9 +132,6 @@ cron.schedule('0 0 */1 * * *', () => {
     }).on('error', function(e){
         console.log("Got an error: ", e);
     });
-    
-    // store dictionary to mongodatabase
-    middleware.namedic();
 });
 
 /**************************
