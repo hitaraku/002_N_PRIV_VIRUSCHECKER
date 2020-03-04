@@ -10,14 +10,14 @@ const {TranslationServiceClient} = require('@google-cloud/translate');
 
 // Instantiates a client
 const translationClient = new TranslationServiceClient();
-async function translateText() {
+async function translateText(sourceString, targetString, textString) {
   // Construct request
   const request = {
     parent: `projects/${projectId}/locations/${location}`,
-    contents: [text],
+    contents: [textString],
     mimeType: 'text/plain', // mime types: text/plain, text/html
-    sourceLanguageCode: 'zh',
-    targetLanguageCode: 'ja-JP',
+    sourceLanguageCode: sourceString,
+    targetLanguageCode: targetString,
   };
 
   try {
@@ -32,5 +32,16 @@ async function translateText() {
   }
 }
 
-translateText();
+translateText('zh', 'ja-JP', '瑞士');
 
+// const translate = require('@vitalets/google-translate-api');
+
+// translate('英国（含北爱尔兰）', {from: 'zh-CN', to: 'en'}).then(res => function(callback) {
+//     console.log(res.text);
+//     //=> I speak English
+//     // console.log(res.from.language.iso);
+//     // //=> nl
+// }).catch(err => {
+//     console.error(err);
+// });
+// 
