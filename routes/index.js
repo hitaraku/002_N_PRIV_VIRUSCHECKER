@@ -60,9 +60,11 @@ router.get("/japan", function(req, res){
 });
 
 // For Sitemap
-router.get('/sitemap.xml', (req, res) => {
-   res.set('Content-Type', 'text/xml');
-   res.send( fs.readFileSync(require('path').resolve(__dirname, '../sitemap.xml'), "utf8"));
-});
+// router.get('/sitemap.xml', (req, res) => {
+//   res.set('Content-Type', 'text/xml');
+//   res.send( fs.readFileSync(require('path').resolve(__dirname, '../sitemap.xml'), "utf8"));
+// });
+
+
 
 module.exports = router;

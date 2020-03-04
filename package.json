@@ -28,6 +28,7 @@
     "mongose": "0.0.2-security",
     "node-cron": "^2.0.3",
     "node-csv-parse": "^1.2.0",
+    "payjp": "^2.0.4",
     "router": "^1.3.3"
   }
 }
