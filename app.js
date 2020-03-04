@@ -156,7 +156,7 @@ app.get('*',function(req, res,next){
   } else {
     if(req.hostname == 'viruschecker.tokyo') {
         res.redirect(`https://www.${req.hostname}${req.url}`);
-    } 
+    }
     next(); /* Continue to other routes if we're not redirecting */  
   }
 });
@@ -169,7 +169,8 @@ app.get('*',function(req, res,next){
 //     opportunityRoutes   = require("./routes/opportunity"),
 //     indexRoutes         = require("./routes/index");
     
-var indexRoutes         = require("./routes/index");
+var indexRoutes         = require("./routes/index"),
+    payRoutes         = require("./routes/pay");
 
 /**************************
 * Configure for API, css, ejs...
@@ -184,8 +185,16 @@ app.use(flash());
 * Configure For Routes
 **************************/
 app.use("/", indexRoutes);
+app.use("/pays", payRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
+
+/**************************
+* Redirect Not Found Page
+**************************/
+app.get("*", function(req, res) {
+    res.render("404"); 
+});
 
 
 /**************************
