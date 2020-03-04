@@ -154,6 +154,9 @@ app.get('*',function(req, res,next){
         console.log("req.url : " + req.url);
       }
   } else {
+    if(req.hostname == 'viruschecker.tokyo') {
+        res.redirect(`https://www.${req.hostname}${req.url}`);
+    } 
     next(); /* Continue to other routes if we're not redirecting */  
   }
 });

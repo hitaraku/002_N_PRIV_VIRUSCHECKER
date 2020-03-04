@@ -5,7 +5,6 @@ var CountrydictionarySchema = new mongoose.Schema({
     japanese: String,
     english: String,
     spanish: String,
-    
     gotDate: Date,
 });
 
