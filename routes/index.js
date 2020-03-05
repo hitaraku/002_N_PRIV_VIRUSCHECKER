@@ -99,7 +99,7 @@ router.get('/login/facebook', passport.authenticate('facebook', {
 );
 
 router.get('/return', passport.authenticate('facebook', { failureRedirect: '/login' }), function(req, res) {
-  res.redirect('/');
+  res.redirect('/pays');
 });
 
 router.get('/profile', require('connect-ensure-login').ensureLoggedIn(), function(req, res){
@@ -108,7 +108,7 @@ router.get('/profile', require('connect-ensure-login').ensureLoggedIn(), functio
 
 router.get('/logout', function(req, res) {
   req.logout();
-  res.redirect('/');
+  res.redirect('/pays');
 });
 
 module.exports = router;

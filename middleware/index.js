@@ -14,14 +14,15 @@ const {TranslationServiceClient} = require('@google-cloud/translate');
 // Instantiates a client
 const translationClient = new TranslationServiceClient();
 async function translateText(sourceString, targetString, textString) {
-  // Construct request
-  const request = {
-    parent: `projects/${projectId}/locations/${location}`,
-    contents: [textString],
-    mimeType: 'text/plain', // mime types: text/plain, text/html
-    sourceLanguageCode: sourceString,
-    targetLanguageCode: targetString,
-  };
+
+    // Construct request
+    const request = {
+        parent: `projects/${projectId}/locations/${location}`,
+        contents: [textString],
+        mimeType: 'text/plain', // mime types: text/plain, text/html
+        sourceLanguageCode: sourceString,
+        targetLanguageCode: targetString,
+    };
 
   try {
     // Run request

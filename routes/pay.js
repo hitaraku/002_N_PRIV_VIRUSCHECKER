@@ -16,7 +16,7 @@ router.get("/", function(req, res) {
     res.render("pays/index"); 
 });
 
-router.post('/paied', (req, res) => {
+router.post('/paied',  (req, res) => {
     // console.log("req.body.payjp_token : " + req.body.payjp_token);
     payjp.charges.create({
       card: req.body.payjp_token,
