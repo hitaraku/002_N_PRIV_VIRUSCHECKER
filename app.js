@@ -10,7 +10,7 @@ const express       = require("express"),
     // passport      = require("passport"),
     // LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
-    // User           = require("./models/user"),
+    User           = require("./models/user"),
     // ShopOwner      = require("./models/shopowner"),
     // Category1      = require("./models/category1"),
     // Category2      = require("./models/category2"),
@@ -26,6 +26,8 @@ const express       = require("express"),
     csv               = require("csv"),
     middleware  = require("./middleware/index.js"),
     cron = require('node-cron');
+    passport = require('passport'),
+    FacebookStrategy = require('passport-facebook').Strategy;
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
 
@@ -42,7 +44,6 @@ if(process.env.MONGO_SECRET) {
     var jsonContent = JSON.parse(contents);
     connecturl = jsonContent.mongoose_connection;
 }
-console.log("connecturl: " + connecturl);
 
 // connect use connectUrl
 mongoose.connect(connecturl, function(err, db){
@@ -135,6 +136,69 @@ cron.schedule('0 0 */1 * * *', () => {
 });
 
 /**************************
+* Configure Facebook Passport 
+**************************/
+// for SSL enable callbackURL
+app.enable("trust proxy");
+
+passport.use(
+  new FacebookStrategy(
+    {
+        clientID: process.env.FACEBOOK_APP_ID,
+        clientSecret: process.env.FACEBOOK_APP_SECRET,
+        callbackURL: '/return',
+        profileFields: ['id', 'emails', 'displayName']
+    },
+    (accessToken, refreshToken, profile, done) => {
+      if (!profile) {
+        return done(null, false);
+      }
+      
+      // TODO DELETE
+      console.log(profile);
+
+      User.findOne({ facebookId: profile.id })
+        .then(existingUser => {
+          if (existingUser) {
+            done(null, existingUser);
+          } else {
+            var notfoundemail = "";
+            if (!profile.emails || !profile.emails[0].value || !profile._json.email) {
+                notfoundemail = "notfound";
+            }
+            let email = profile.emails[0].value || profile._json.email || notfoundemail;
+            new User({
+              displayName: profile.displayName,
+              facebookId: profile.id,
+              email: email
+            })
+              .save()
+              .then(user => done(null, user));
+          }
+        })
+        .catch(err => done(err, null));
+    }
+  )
+);
+
+// Configure Passport authenticated session persistence.
+//
+// In order to restore authentication state across HTTP requests, Passport needs
+// to serialize users into and deserialize users out of the session.  In a
+// production-quality application, this would typically be as simple as
+// supplying the user ID when serializing, and querying the user record by ID
+// from the database when deserializing.  However, due to the fact that this
+// example does not have a database, the complete Facebook profile is serialized
+// and deserialized.
+passport.serializeUser(function(user, cb) {
+  cb(null, user);
+});
+
+passport.deserializeUser(function(obj, cb) {
+  cb(null, obj);
+});
+
+/**************************
 * UploadFile 'express-fileupload'
 **************************/
 // default options
@@ -170,7 +234,8 @@ app.get('*',function(req, res,next){
 //     indexRoutes         = require("./routes/index");
     
 var indexRoutes         = require("./routes/index"),
-    payRoutes         = require("./routes/pay");
+    payRoutes         = require("./routes/pay"),
+    userRoutes          = require("./routes/user");
 
 /**************************
 * Configure for API, css, ejs...
@@ -182,12 +247,38 @@ app.use(methodOverride("_method"));
 app.use(flash());
 
 /**************************
+* Initialize Passport and restore authentication state, if any, 
+* from the session
+**************************/
+app.use(require("express-session")({
+    secret: "Once again Rusty again",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// configuser for currentuser
+app.use(function(req, res, next){
+    res.locals.currentUser = req.user;
+    res.locals.error = req.flash("error");
+    res.locals.success = req.flash("success");
+    next();
+});
+
+/**************************
 * Configure For Routes
 **************************/
 app.use("/", indexRoutes);
 app.use("/pays", payRoutes);
+app.use("/users", userRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
+
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+  res.render("notfound");
+});
 
 /**************************
 * Redirect Not Found Page
@@ -249,7 +340,6 @@ app.get("*", function(req, res) {
 app.listen(process.env.PORT, process.env.IP, function() {
     console.log("Coronaviurs start!!");
 });
-
 
 /**************************
 * CSV Parser For store japanese people coronaviurus situation.

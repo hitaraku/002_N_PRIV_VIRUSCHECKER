@@ -1,6 +1,6 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
-var CoronavirustimelineSchema = new mongoose.Schema({
+const CoronavirustimelineSchema = new mongoose.Schema({
     cornavirusoverall: Object,
     gotDate: Date,
 });

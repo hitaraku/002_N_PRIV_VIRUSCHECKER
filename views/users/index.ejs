@@ -1,0 +1,35 @@
+<% include ../partials/header %>
+
+<div class="container">
+    <div class="container">
+        <header class="jumbotron">
+            <div class="container">
+                <h1>コロナウイルス簡易チェッカー</h1>
+                <p>現在のコロナウイルス感染者の統計を確認する為のサイトです。</p>
+                <small>※データ取得元が中国である為、時差や感染者数など一部に報道と差異が発生する事がございます。<br />
+                ※当サイトはあくまで参考程度にご活用ください。</small><br />
+                <small>※データは約１時間更新ですが、データ元が中国のサーバの為、更新頻度が変わる場合があります。</small><br />
+                <small>※データ取得元：<a href="https://lab.isaaclin.cn/nCoV/">https://lab.isaaclin.cn/nCoV/</a></small>
+            </div>
+            <a href="/login">ログイン</a>
+        </header>
+    
+        <div class="row" style="display:flex; flex-wrap: wrap;">
+            <% users.forEach(function(user) { %>
+                <div class="col-12 col-md-3 col-sm-6" style="margin:10px 0;">
+                    <div class="card">
+                        <!--  style="width:100%; height:150px;border-radius: 20%;"  -->
+                        <div class="card-body">
+                            <h5 class="card-title">User Name: <%= user.displayName %></h5>
+                            <h5 class="card-title">Facebook Id: <%= user.facebookId %></h5>
+                            <% if(user.email != "") { %>
+                                <h5 class="card-title">Email: <%= user.email %></h5>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+<% include ../partials/footer %>

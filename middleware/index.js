@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var Coronavirustimeline = require("../models/coronavirustimeline"),
     Countrydictionary = require("../models/countrydictionary");
 
@@ -146,3 +147,14 @@ module.exports.namedic = function(req, res, next) {
         }
     });
 }
+// var middlewareObj = {}
+
+// middlewareObj.isLoggedIn = function(req, res, next) {
+//     if(req.isAuthenticated()) {
+//         return next();
+//     }
+//     req.flash("error", "ログインしてください。");
+//     res.redirect("/login");
+// }
+
+// module.exports = middlewareObj;
