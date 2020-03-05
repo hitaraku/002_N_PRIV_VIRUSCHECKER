@@ -132,13 +132,13 @@ module.exports.namedic = function(req, res, next) {
                             */
                          
                             // For Create JP
-                            translateText('zh', 'ja-JP', repeatDeleteArray[i]);
+                            translateText('zh-CN', 'ja-JP', repeatDeleteArray[i]);
 
                             // For English
-                            translateText('zh', 'en', repeatDeleteArray[i]);
+                            translateText('zh-CN', 'en', repeatDeleteArray[i]);
             
                             // For Spanish
-                            translateText('zh', 'es', repeatDeleteArray[i]);
+                            translateText('zh-CN', 'es', repeatDeleteArray[i]);
                         }
                     }
                 }
