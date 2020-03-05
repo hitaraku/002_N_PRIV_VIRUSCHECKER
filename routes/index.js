@@ -11,10 +11,6 @@ var express     = require("express"),
     // assistant   = require("../middleware/watson_assistant"),
     // User        = require("../models/user");
 
-// // Index Route
-// router.get("/", function(req, res){
-//     res.render("landing");
-// });
 /*************************
 * Configure for Route
 **************************/

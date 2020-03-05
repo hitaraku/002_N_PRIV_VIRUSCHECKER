@@ -1,6 +1,7 @@
 var express     = require("express"),
     router      = express.Router(),
     https       = require("https"),
+    middleware  = require("../middleware"),
     fs                = require("fs");
     // passport    = require("passport"),
     // assistant   = require("../middleware/watson_assistant"),
@@ -12,11 +13,11 @@ const payjp = require('payjp')('sk_test_9ecbcce9de8ff31e81709695');
 /*************************
 * Configure for Route
 **************************/
-router.get("/", function(req, res) {
+router.get("/", middleware.isLoggedIn, function(req, res) {
     res.render("pays/index"); 
 });
 
-router.post('/paied',  (req, res) => {
+router.post('/paied', middleware.isLoggedIn, (req, res) => {
     // console.log("req.body.payjp_token : " + req.body.payjp_token);
     payjp.charges.create({
       card: req.body.payjp_token,
