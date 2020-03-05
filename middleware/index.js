@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 var Coronavirustimeline = require("../models/coronavirustimeline"),
     Countrydictionary = require("../models/countrydictionary");
 
