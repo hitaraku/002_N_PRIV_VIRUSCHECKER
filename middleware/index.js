@@ -1,6 +1,10 @@
 var Coronavirustimeline = require("../models/coronavirustimeline"),
     Countrydictionary = require("../models/countrydictionary");
 
+// For Middleware Array    
+var middlewareObj = {}
+    
+
 /**
  * This Section is translate and mongoose store function *
 **/
@@ -147,6 +151,14 @@ module.exports.namedic = function(req, res, next) {
         }
     });
 }
+
+middlewareObj.isLoggedIn = function(req, res, next) {
+    if(req.isAuthenticated()) {
+        return next();
+    }
+    req.flash("error", "ログインしてください。");
+    res.redirect("/login");
+}
 // var middlewareObj = {}
 
 // middlewareObj.isLoggedIn = function(req, res, next) {
@@ -157,4 +169,4 @@ module.exports.namedic = function(req, res, next) {
 //     res.redirect("/login");
 // }
 
-// module.exports = middlewareObj;
+module.exports = middlewareObj;
