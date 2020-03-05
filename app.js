@@ -28,7 +28,6 @@ const express       = require("express"),
     cron = require('node-cron');
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
-
     
 /**************************
 * Mongoose Connection
@@ -61,7 +60,7 @@ const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
       
 // schedule get wordpress from web to store mongodb
-cron.schedule('3 * * * *', () => {
+cron.schedule('11 * * * *', () => {
     // Get Date from china goverment about Coronavirus
     https.get(areaUrl, function(res){
         var body = '';
@@ -84,6 +83,24 @@ cron.schedule('3 * * * *', () => {
                         console.log("Got store cornavirus to database error : " + err);
                     } else {
                         console.log("success store cornavirus to database");
+                        
+                        /**************************
+                        * make googleapifile 
+                        **************************/
+                        var dir = './secret';
+                        
+                        if (!fs.existsSync(dir)){
+                            fs.mkdirSync(dir);
+                        }
+                        
+                        fs.writeFile("./secret/googleapi.json",process.env.GOOGLE_APPLICATION_CREDENTIALS_FILE, function(err){
+                          if(err) {
+                            console.log(err);
+                          } else {
+                            console.log("success");
+                          }
+                        });
+                        
                         // store dictionary to mongodatabase
                         middleware.namedic();
                     }
