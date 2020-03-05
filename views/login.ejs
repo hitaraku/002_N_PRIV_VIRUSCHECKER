@@ -1,0 +1,16 @@
+<% include partials/header %>
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <h1>コロナウイルス簡易チェッカー</h1>
+        </div>
+        <% if(!currentUser) { %>
+            <a href="/login/facebook" class="btn btn-primary">Facebookでログイン</a>
+        <% } else { %> 
+            <a href="/logout" class="btn btn-primary">ログアウト</a>
+        <%  } %>        
+    </header>
+</div>
+
+<% include partials/footer %>

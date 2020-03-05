@@ -11,6 +11,11 @@
             <small>※データ取得元：<a href="https://lab.isaaclin.cn/nCoV/">https://lab.isaaclin.cn/nCoV/</a></small><br />
             <small>※国内状況は<a href="/japan">こちら</a></small>
         </div>
+
+        <% if(!currentUser) { %>
+        <% } else { %> 
+            <a class="btn btn-primary" href="/users">ユーザー一覧</a>
+        <%  } %>            
     </header>
     
         

@@ -1,0 +1,45 @@
+<% include ../partials/header %>
+
+    <div class="container">
+        <div class="payments__overview__actions">
+          <style>
+            #payjp_checkout_box input[type=button] {
+              background-image: none;
+              background-color: #fff;
+              border: 1px solid #ccc;
+              border-radius: 5px;
+              color: #333;
+              font-size: 1.4rem;
+              font-family: "Noto+robot", "Noto Sans", "Noto Sans CJK JP", sans-serif;
+              font-weight: normal;
+              margin: 0;
+              padding: 10px 20px;
+              text-align: center;
+              width: 40%;
+            }
+            #payjp_checkout_box input[type=button].has-token {
+              background-image: none;
+              background-color: #fff;
+              border: 1px solid #ccc;
+            }
+          </style>
+          
+            <section class="jumbotron text-center">
+                <div class="container">
+                    <h1 class="jumbotron-heading">¥1,000</h1>
+                    <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+
+                  <form action="/pays/paied" method="POST">
+                      <script type="text/javascript" src="https://checkout.pay.jp/" class="payments__overview__actions__item payjp-button" data-key="pk_test_96b5b64a474429de9cd8258f" data-payjp="4d4bdfd81a36f8be5e8bceeaebfac4cd9edbe85c" data-token-name="payjp_token" data-partial="true" data-text="カード情報の入力をはじめる" data-on-created="payjpOnCreated" data-on-failed="payjpOnFailed">
+                      </script>
+                      
+                      <p>
+                        <button type="submit" class="btn btn-primary col-4 my-2 py-2">決済する</button>
+                      </p>
+                  </form>
+                </div>
+            </section>          
+        </div>
+    </div>
+        
+<% include ../partials/footer %>
