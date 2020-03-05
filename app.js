@@ -30,7 +30,6 @@ const express       = require("express"),
     FacebookStrategy = require('passport-facebook').Strategy;
     // fileUpload = require('express-fileupload');
     // seedDB        = require("./seeds");
-
     
 /**************************
 * Mongoose Connection
@@ -61,8 +60,8 @@ mongoose.connect(connecturl, function(err, db){
 const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
       
-// schedule get coronavirus from web to store mongodb
-cron.schedule('0 0 */1 * * *', () => {
+// schedule get wordpress from web to store mongodb
+cron.schedule('0 * * * *', () => {
     // Get Date from china goverment about Coronavirus
     https.get(areaUrl, function(res){
         var body = '';
@@ -82,16 +81,15 @@ cron.schedule('0 0 */1 * * *', () => {
                 // create a new shopuser and save to DB.
                 Coronavirustimeline.create(newCoronavirustimeline, function(err, newlyCreated){
                     if(err) {
-                        console.log(err);
+                        console.log("Got store cornavirus to database error : " + err);
                     } else {
                         console.log("success store cornavirus to database");
+                        // store dictionary to mongodatabase
+                        middleware.namedic();
                     }
                 });
                 
                 console.log("Got a response: ", fbResponse.picture);
-
-                // store dictionary to mongodatabase
-                middleware.namedic();
             } catch (e) {
                 console.log("Error Got a HTML : ", e);
             }
@@ -118,10 +116,17 @@ cron.schedule('0 0 */1 * * *', () => {
                     wpPostsAll: wpResponse,
                     gotDate: dateTime,
                 }
+                Wptimeline.remove({}, function(err) { 
+                    if(err) {
+                        console.log("remove wp collection : " + err);
+                    } else {
+                        console.log('collection removed') 
+                    }
+                });
                 // create a new shopuser and save to DB.
                 Wptimeline.create(newWptimeline, function(err, newlyCreated){
                     if(err) {
-                        console.log(err);
+                        console.log("Got store wordpress to database error : " + err);
                     } else {
                         console.log("success store wordpress article title to database");
                     }
