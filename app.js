@@ -167,11 +167,12 @@ passport.use(
             }
             let email = profile.emails[0].value || profile._json.email || notfoundemail;
             let photoUrl = profile.photos[0].value || profile._json.picture.data[0];
+            console.log("photoUrl: ", photoUrl);
             new User({
               displayName: profile.displayName,
               facebookId: profile.id,
               email: email,
-              profile: photoUrl
+              photoUrl: photoUrl
             })
               .save()
               .then(user => done(null, user));
