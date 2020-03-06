@@ -81,7 +81,10 @@
                         </li>
                     <% } else { %> 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">ようこそ！<strong><%= currentUser.displayName %></strong>さん</a>
+                            <a class="nav-link" href="#">ようこそ！
+                            <img src="<%= currentUser.photoUrl%>?width=100&amp;height=100" alt="Facebookプロフィール画像">
+                            <strong><%= currentUser.displayName %></strong>さん
+                            </a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-primary" href="/logout">ログアウト</a>
