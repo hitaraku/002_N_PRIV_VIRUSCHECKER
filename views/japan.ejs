@@ -150,25 +150,7 @@
 			window.myHorizontalBar = new Chart(ctx, {
 				type: 'horizontalBar',
 				data: horizontalBarChartData,
-				options: {
-					// Elements options apply to all of the options unless overridden in a dataset
-					// In this case, we are setting the border of each horizontal bar to be 2px wide
-					elements: {
-						rectangle: {
-							borderWidth: 1,
-						}
-					},
-					responsive: true,
-					legend: {
-						position: 'right',
-					},
-					title: {
-						display: true,
-						text: 'Chart.js Horizontal Bar Chart'
-					}
-				}
 			});
-
 		};
 	</script>
     
