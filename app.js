@@ -152,7 +152,7 @@ passport.use(
       }
       
       // TODO DELETE
-      console.log(profile);
+      console.log("profile: ", profile);
 
       User.findOne({ facebookId: profile.id })
         .then(existingUser => {
