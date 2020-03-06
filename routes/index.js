@@ -3,6 +3,7 @@ var express     = require("express"),
     https       = require("https"),
     fs                = require("fs"),
     passport    = require("passport"),
+    middleware  = require("../middleware"),
     Wptimeline = require("../models/wptimeline"),
     Coronavirustimeline = require("../models/coronavirustimeline"),
     Countrydictionary = require("../models/countrydictionary"),
@@ -98,7 +99,7 @@ router.get('/return', passport.authenticate('facebook', { failureRedirect: '/log
   res.redirect('/pays');
 });
 
-router.get('/profile', require('connect-ensure-login').ensureLoggedIn(), function(req, res){
+router.get('/profile', middleware.isLoggedIn, function(req, res){
   res.render('profile', { user: req.user });
 });
 
