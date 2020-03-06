@@ -7,25 +7,17 @@ const express       = require("express"),
     mongoose      = require("mongoose"),
     flash         = require("connect-flash"),
     sitemap = require('express-sitemap'),
-    // passport      = require("passport"),
-    // LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
     User           = require("./models/user"),
-    // ShopOwner      = require("./models/shopowner"),
-    // Category1      = require("./models/category1"),
-    // Category2      = require("./models/category2"),
-    // Opportunity      = require("./models/opportunity"),
-    // Assistant      = require("./middleware/watson_assistant"),
     Coronavirustimeline     = require("./models/coronavirustimeline"),
     Coronavirustimelineinjapan = require("./models/coronavirustimelineinjapan"),
     Wptimeline                 = require("./models/wptimeline"),
-    // Coronavirusrumors       = require("./models/coronavirusrumors"),
     dateFormat  = require('dateformat'),
     https             = require("https"),
     fs                = require("fs"),
     csv               = require("csv"),
     middleware  = require("./middleware/index.js"),
-    cron = require('node-cron');
+    cron = require('node-cron'),
     passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy;
     // fileUpload = require('express-fileupload');
@@ -152,7 +144,7 @@ passport.use(
         clientID: process.env.FACEBOOK_APP_ID,
         clientSecret: process.env.FACEBOOK_APP_SECRET,
         callbackURL: '/return',
-        profileFields: ['id', 'emails', 'displayName']
+        profileFields: ['id', 'emails', 'displayName', 'photos']
     },
     (accessToken, refreshToken, profile, done) => {
       if (!profile) {
@@ -175,7 +167,8 @@ passport.use(
             new User({
               displayName: profile.displayName,
               facebookId: profile.id,
-              email: email
+              email: email,
+              profile: profile.photos
             })
               .save()
               .then(user => done(null, user));
