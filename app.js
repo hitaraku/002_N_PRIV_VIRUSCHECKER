@@ -168,7 +168,7 @@ passport.use(
               displayName: profile.displayName,
               facebookId: profile.id,
               email: email,
-              profile: profile.photos
+              profile: profile.photos[0].value
             })
               .save()
               .then(user => done(null, user));
