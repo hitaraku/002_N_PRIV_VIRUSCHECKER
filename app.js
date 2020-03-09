@@ -152,7 +152,6 @@ passport.use(
       }
       
       // TODO DELETE
-      console.log(profile);
 
       User.findOne({ facebookId: profile.id })
         .then(existingUser => {
@@ -164,11 +163,13 @@ passport.use(
                 notfoundemail = "notfound";
             }
             let email = profile.emails[0].value || profile._json.email || notfoundemail;
+            let photoUrl = profile.photos[0].value || profile._json.picture.data[0];
+            console.log("photoUrl: ", photoUrl);
             new User({
               displayName: profile.displayName,
               facebookId: profile.id,
               email: email,
-              profile: profile.photos
+              photoUrl: photoUrl
             })
               .save()
               .then(user => done(null, user));
@@ -272,11 +273,6 @@ app.use("/pays", payRoutes);
 app.use("/users", userRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
-
-//The 404 Route (ALWAYS Keep this as the last route)
-app.get('*', function(req, res){
-  res.render("notfound");
-});
 
 /**************************
 * Redirect Not Found Page
