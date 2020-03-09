@@ -10,7 +10,16 @@
             <p>（注）： 14例目は中華人民共和国に帰国しているため、現在の状況は不明。<br />
 　　　　 18例目は死亡例。<br />
 　　　　 その他、10例の無症状病原体保有者が確認されている。</p>
-            <small>※全世界状況は<a href="/">こちら</a></small>
+            <small>※全世界状況は<a href="/">こちら</a></small><br /><br />
+
+            <!-- facebook share -->
+            <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fwww.viruschecker.tokyo%2F&layout=button_count&size=large&appId=774531906273658&width=91&height=28" width="91" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe> 
+            <!-- Twitter share -->
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            　<a href="//twitter.com/share" data-size="large" class="twitter-share-button" data-text="コロナウイルス簡易チェッカー
+" data-url="https://www.viruschecker.tokyo/" data-lang="ja">
+             Twitterでシェア
+             </a>
         </div>
     </header>
     <%
@@ -150,25 +159,7 @@
 			window.myHorizontalBar = new Chart(ctx, {
 				type: 'horizontalBar',
 				data: horizontalBarChartData,
-				options: {
-					// Elements options apply to all of the options unless overridden in a dataset
-					// In this case, we are setting the border of each horizontal bar to be 2px wide
-					elements: {
-						rectangle: {
-							borderWidth: 1,
-						}
-					},
-					responsive: true,
-					legend: {
-						position: 'right',
-					},
-					title: {
-						display: true,
-						text: 'Chart.js Horizontal Bar Chart'
-					}
-				}
 			});
-
 		};
 	</script>
     

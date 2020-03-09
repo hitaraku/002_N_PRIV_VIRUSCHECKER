@@ -9,11 +9,24 @@
             ※当サイトはあくまで参考程度にご活用ください。</small><br />
             <small>※データは約１時間更新ですが、データ元が中国のサーバの為、更新頻度が変わる場合があります。</small><br />
             <small>※データ取得元：<a href="https://lab.isaaclin.cn/nCoV/">https://lab.isaaclin.cn/nCoV/</a></small><br />
-            <small>※国内状況は<a href="/japan">こちら</a></small>
+            <small>※国内状況は<a href="/japan">こちら</a></small><br /><br />
+            
+            <!-- facebook share -->
+            <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fwww.viruschecker.tokyo%2F&layout=button_count&size=large&appId=774531906273658&width=91&height=28" width="91" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe> 
+            <!-- Twitter share -->
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            　<a href="//twitter.com/share" data-size="large" class="twitter-share-button" data-text="コロナウイルス簡易チェッカー
+" data-url="https://www.viruschecker.tokyo/" data-lang="ja">
+             Twitterでシェア
+             </a>
         </div>
+
+        <% if(!currentUser) { %>
+        <% } else { %> 
+            <a class="btn btn-primary" href="/users">ユーザー一覧</a>
+        <%  } %>            
     </header>
     
-        
     <%
     // show date
     function dateToStr24H(date, format) {
@@ -193,7 +206,6 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">国、場所名</th>
-              <th scope="col">国、場所名</th>
               <th scope="col">総合感染者数</th>
               <th scope="col">現在の感染者数</th>
               <th scope="col">治癒者数</th>
@@ -215,7 +227,6 @@
                     //     }
                     // }
                 %>
-                <td><%= removeDuplicated_Array[i].countryName %></td>
                 <td><%= countryName2Jp %></td>
                 <td><%= removeDuplicated_Array[i].confirmedCount %></td>
                 <td><%= removeDuplicated_Array[i].currentConfirmedCount %></td>
