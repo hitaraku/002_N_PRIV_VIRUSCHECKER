@@ -152,9 +152,6 @@ passport.use(
       }
       
       // TODO DELETE
-      console.log("profile: ", profile);
-      console.log("profile photos 0: ", profile.photos[0].value);
-      console.log("profile._json.picture.data[0]: ", profile._json.picture.data[0]);
 
       User.findOne({ facebookId: profile.id })
         .then(existingUser => {
@@ -276,11 +273,6 @@ app.use("/pays", payRoutes);
 app.use("/users", userRoutes);
 // app.use("/shopowners", shopownerRoutes);
 // app.use("/opportunitys", opportunityRoutes);
-
-//The 404 Route (ALWAYS Keep this as the last route)
-app.get('*', function(req, res){
-  res.render("notfound");
-});
 
 /**************************
 * Redirect Not Found Page
