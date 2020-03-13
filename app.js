@@ -53,7 +53,7 @@ const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
       
 // schedule get wordpress from web to store mongodb
-cron.schedule('17 * * * *', () => {
+cron.schedule('20 * * * *', () => {
     // Get Date from china goverment about Coronavirus
     https.get(areaUrl, function(res){
         var body = '';
