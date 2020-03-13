@@ -10,7 +10,6 @@ var middlewareObj = {}
 **/
 const projectId = 'n-priv-viruschecker';
 const location = 'global';
-// const text = '英国（含北爱尔兰）';
 
 // Imports the Google Cloud Translation library
 const {TranslationServiceClient} = require('@google-cloud/translate');
@@ -89,7 +88,7 @@ async function translateText(sourceString, targetString, textString) {
 /**
  * Middle ware for dictionary *
 **/
-module.exports.namedic = function(req, res, next) {
+middlewareObj.namedic = function(req, res, next) {
         // For get all coronaCountryname
     Coronavirustimeline.findOne({}).sort({ gotDate: 'desc'}).exec(function(err, latestCoronavirustimeline){
         if(err) {
