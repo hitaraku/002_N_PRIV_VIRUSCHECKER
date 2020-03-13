@@ -10,6 +10,10 @@
             <small>※データは約１時間更新ですが、データ元が中国のサーバの為、更新頻度が変わる場合があります。</small><br />
             <small>※データ取得元：<a href="https://lab.isaaclin.cn/nCoV/">https://lab.isaaclin.cn/nCoV/</a></small><br />
             <small>※国内状況は<a href="/japan">こちら</a></small><br /><br />
+            <div class="row">
+                <small>本サイトのシェア用QRコードになります。</small><br /><br />
+                <img width="20%" height="20%" style="border-radius:10px" src="/resources/images/qr20200309204135169.png" />
+            </div><br />
             
             <!-- facebook share -->
             <iframe src="https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fwww.viruschecker.tokyo%2F&layout=button_count&size=large&appId=774531906273658&width=91&height=28" width="91" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe> 
@@ -205,6 +209,7 @@
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">国、場所名(中国名)</th>
               <th scope="col">国、場所名</th>
               <th scope="col">総合感染者数</th>
               <th scope="col">現在の感染者数</th>
@@ -227,6 +232,7 @@
                     //     }
                     // }
                 %>
+                <td><%= removeDuplicated_Array[i].countryName %></td>
                 <td><%= countryName2Jp %></td>
                 <td><%= removeDuplicated_Array[i].confirmedCount %></td>
                 <td><%= removeDuplicated_Array[i].currentConfirmedCount %></td>
@@ -245,3 +251,5 @@
     </div>
 
 <% include partials/footer %>
+
+qr20200309204135169.png

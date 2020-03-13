@@ -53,9 +53,9 @@ const url           = 'https://lab.isaaclin.cn/nCoV/',
       areaUrl   = url + 'api/area';
       
 // schedule get wordpress from web to store mongodb
-cron.schedule('0 * * * *', () => {
+cron.schedule('51 * * * *', () => {
     // Get Date from china goverment about Coronavirus
-    https.get(areaUrl, function(res){
+    var reqLabArea = https.get(areaUrl, function(res){
         var body = '';
         var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
     
@@ -89,11 +89,11 @@ cron.schedule('0 * * * *', () => {
     }).on('error', function(e){
           console.log("Got an error: ", e);
     });
-    
+
     // For get json from Wordpress
     var url = "https://virus.evelinks.org/wp-json/wp/v2/posts"
     var wpPostUrlJson = url /* + "?_fields=author,id,excerpt,title,link" */;
-    https.get(wpPostUrlJson, function(res){
+    var reqWp = https.get(wpPostUrlJson, function(res){
         var body = '';
         var dateTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Tokyo"});
 
@@ -130,6 +130,7 @@ cron.schedule('0 * * * *', () => {
     }).on('error', function(e){
         console.log("Got an error: ", e);
     });
+
 });
 
 /**************************
