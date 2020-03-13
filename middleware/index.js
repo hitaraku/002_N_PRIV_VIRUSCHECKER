@@ -10,7 +10,6 @@ var middlewareObj = {}
 **/
 const projectId = 'n-priv-viruschecker';
 const location = 'global';
-// const text = '英国（含北爱尔兰）';
 
 // Imports the Google Cloud Translation library
 const {TranslationServiceClient} = require('@google-cloud/translate');
