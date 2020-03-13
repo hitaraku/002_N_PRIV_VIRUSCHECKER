@@ -73,6 +73,25 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">コロナウイルス簡易チェッカー</a>
             </div>
+            <div class="my-2 my-lg-0">
+                <ul class="navbar-nav mr-auto">
+                    <% if(!currentUser) { %>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="/login">ログイン</a>
+                        </li>
+                    <% } else { %> 
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">ようこそ！
+                            <img src="<%= currentUser.photoUrl%>" alt="Facebookプロフィール画像">
+                            <strong><%= currentUser.displayName %></strong>さん
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-primary" href="/logout">ログアウト</a>
+                        </li>
+                    <%  } %>
+                </ul>
+            </div>
         </div>
     </nav>
     
