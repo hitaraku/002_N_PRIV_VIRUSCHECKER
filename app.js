@@ -130,7 +130,6 @@ cron.schedule('0 * * * *', () => {
     }).on('error', function(e){
         console.log("Got an error: ", e);
     });
-
 });
 
 /**************************
