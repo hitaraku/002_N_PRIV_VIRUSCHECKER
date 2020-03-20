@@ -3,8 +3,8 @@
     <div class="container">
     <header class="jumbotron">
         <div class="container">
-            <h1>新型コロナウイルス感染　簡易チェック　ヒートマップ</h1>
-            <p>新型コロナウイルスの現在の感染者の統計を確認する為のサイトです。</p>
+            <h1>新型コロナウイルス感染　ヒートマップ</h1>
+            <p>新型コロナウイルスの現在の感染者の統計を確認する為のヒートマップサイトです。</p>
             <small>※データ取得元が中国である為、時差や感染者数など一部に報道と差異が発生する事がございます。<br />
             ※当サイトはあくまで参考程度にご活用ください。</small><br />
             <small>※データは約１時間更新ですが、データ元が中国のサーバの為、更新頻度が変わる場合があります。</small><br />
@@ -209,7 +209,6 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">国、場所名(中国名)</th>
               <th scope="col">国、場所名</th>
               <th scope="col">総合感染者数</th>
               <th scope="col">現在の感染者数</th>
@@ -232,7 +231,6 @@
                     //     }
                     // }
                 %>
-                <td><%= removeDuplicated_Array[i].countryName %></td>
                 <td><%= countryName2Jp %></td>
                 <td><%= removeDuplicated_Array[i].confirmedCount %></td>
                 <td><%= removeDuplicated_Array[i].currentConfirmedCount %></td>
@@ -252,4 +250,4 @@
 
 <% include partials/footer %>
 
-qr20200309204135169.png
+
